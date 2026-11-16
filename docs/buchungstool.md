@@ -100,12 +100,12 @@ Preise sind Netto-Monatspreise für eine Person. „Jährlich“ heißt: bei Jah
 
 Lege für jede Leistung eine eigene Buchungsseite (Terminart) an. Dauer, Puffer und Preise sind Vorschläge, du legst die echten Werte fest: `TODO(Lea)`.
 
-| Buchungsseite (Titel)          | URL-Kürzel         | Dauer (Vorschlag)          | Ort                         | Preis       | Hinweis                                                                |
-| ------------------------------ | ------------------ | -------------------------- | --------------------------- | ----------- | ---------------------------------------------------------------------- |
-| Kostenloses Kennenlerngespräch | `kennenlernen`     | 15–20 Min                  | Online (Video) oder Telefon | kostenlos   | Niedrige Hürde; dient auch zur Klärung, ob der Rest passt.             |
-| Einzelberatung                 | `einzelberatung`   | 60 Min                     | Vor Ort **oder** online     | `TODO(Lea)` | Ort zur Auswahl anbieten (zwei Ortsoptionen).                          |
-| Ernährungsplan – Erstgespräch  | `ernaehrungsplan`  | `TODO(Lea)`                | Vor Ort oder online         | `TODO(Lea)` | Gebucht wird das Gespräch; den Plan erstellst du danach.               |
-| Einkaufstraining               | `einkaufstraining` | `TODO(Lea)` (z. B. 90 Min) | Vor Ort (Treffpunkt)        | `TODO(Lea)` | Treffpunkt in der Bestätigungsmail nennen, nicht im Formular abfragen. |
+| Buchungsseite (Titel)          | URL-Kürzel          | Dauer (Vorschlag)          | Ort                         | Preis       | Hinweis                                                                |
+| ------------------------------ | ------------------- | -------------------------- | --------------------------- | ----------- | ---------------------------------------------------------------------- |
+| Kostenloses Kennenlerngespräch | `kennenlernen`      | 15–20 Min                  | Online (Video) oder Telefon | kostenlos   | Niedrige Hürde; dient auch zur Klärung, ob der Rest passt.             |
+| Einzelberatung                 | `einzelberatung`    | 60 Min                     | Vor Ort **oder** online     | `TODO(Lea)` | Ort zur Auswahl anbieten (zwei Ortsoptionen).                          |
+| Ernährungsplan – Erstgespräch  | `ernaehrungsplaene` | `TODO(Lea)`                | Vor Ort oder online         | `TODO(Lea)` | Gebucht wird das Gespräch; den Plan erstellst du danach.               |
+| Einkaufstraining               | `einkaufstraining`  | `TODO(Lea)` (z. B. 90 Min) | Vor Ort (Treffpunkt)        | `TODO(Lea)` | Treffpunkt in der Bestätigungsmail nennen, nicht im Formular abfragen. |
 
 Für jede Buchungsseite:
 
