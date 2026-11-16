@@ -44,6 +44,8 @@ const widths = [320, 480, 640, 800, 1200, 1600];
     widths={widths}
     sizes={sizes}
     loading={eager ? "eager" : "lazy"}
+    fetchpriority={eager ? "high" : undefined}
+    decoding={eager ? "sync" : "async"}
     class:list={["w-full rounded-3xl object-cover", aspectClass, className]}
   />
 ) : (

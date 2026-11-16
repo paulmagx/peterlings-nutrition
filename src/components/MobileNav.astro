@@ -16,10 +16,10 @@ const path = Astro.url.pathname;
         <a
           href={item.href}
           aria-current={isActive(path, item.href) ? "page" : undefined}
-          class="flex flex-col items-center gap-0.5 rounded-full px-1 py-1 text-slate-500 transition-colors hover:text-sage-700 aria-[current=page]:text-sage-700"
+          class="flex flex-col items-center gap-0.5 rounded-full px-0 py-1 text-slate-500 transition-colors hover:text-sage-700 aria-[current=page]:text-sage-700"
         >
           <Icon name={item.icon} class="size-6" />
-          <span class="text-[11px] font-bold whitespace-nowrap">
+          <span class="text-[10.5px] font-bold min-[360px]:text-[11px] whitespace-nowrap">
             {item.label}
           </span>
         </a>
