@@ -1,0 +1,5 @@
+# Die Domain muss bei einem Domainwechsel angepasst werden (siehe `site` in astro.config.mjs).
+User-agent: *
+Allow: /
+
+Sitemap: https://www.peterlings-nutrition.de/sitemap-index.xml
