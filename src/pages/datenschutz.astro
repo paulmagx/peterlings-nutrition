@@ -54,7 +54,7 @@ const sections: Section[] = [
     title: "Datenschutz auf einen Blick",
     blocks: [
       {
-        p: "Der Schutz deiner persönlichen Daten ist mir wichtig. Diese Website ist bewusst sparsam gebaut: Sie verwendet keine Cookies, kein Tracking und keine Analyse-Tools. Schrift und Icons sind lokal eingebunden, beim Seitenaufruf werden also keine Daten an Google oder ähnliche Anbieter übertragen.",
+        p: "Der Schutz deiner persönlichen Daten ist mir wichtig. Diese Website ist bewusst sparsam gebaut: Sie selbst verwendet keine Cookies, kein Tracking und keine Analyse-Tools. Schrift und Icons sind lokal eingebunden, beim Seitenaufruf werden also keine Daten an Google oder ähnliche Anbieter übertragen.",
       },
       {
         p: "Im Folgenden erfährst du, welche personenbezogenen Daten trotzdem anfallen (z. B. technisch bedingt beim Hosting oder wenn du mich kontaktierst), wofür sie verwendet werden und welche Rechte du hast.",
@@ -81,10 +81,10 @@ const sections: Section[] = [
         p: `E-Mail: ${contactHtml(contact.email, `mailto:${contact.email}`)}<br />Telefon: ${contactHtml(contact.phone, `tel:${contact.phone.replace(/[^\d+]/g, "")}`)}`,
       },
       {
-        p: "Eine Datenschutzbeauftragte ist nicht bestellt, da hierzu keine gesetzliche Pflicht besteht.",
+        p: "Eine Datenschutzbeauftragte bzw. ein Datenschutzbeauftragter ist nicht benannt.",
       },
       {
-        todo: "TODO(Lea): Prüfen lassen, ob wegen der Verarbeitung von Gesundheitsdaten doch eine Pflicht zur Benennung einer bzw. eines Datenschutzbeauftragten besteht (§ 38 BDSG, Art. 37 DSGVO).",
+        todo: "TODO(Lea): Prüfen lassen, ob wegen der Verarbeitung von Gesundheitsdaten eine Pflicht zur Benennung einer bzw. eines Datenschutzbeauftragten besteht (§ 38 BDSG, Art. 37 DSGVO). Wenn nicht, kann der Satz oben um „da hierzu keine gesetzliche Pflicht besteht“ ergänzt werden.",
       },
     ],
   },
@@ -125,10 +125,10 @@ const sections: Section[] = [
         ],
       },
       {
-        p: "Diese Daten werden nicht mit anderen Datenquellen zusammengeführt und nicht ausgewertet, um Besucherinnen und Besucher zu identifizieren. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt in der technisch fehlerfreien Darstellung und der Sicherheit der Website (z. B. Abwehr von Angriffen).",
+        p: "Ich führe diese Daten nicht mit anderen Datenquellen zusammen und werte sie nicht aus, um Besucherinnen und Besucher zu identifizieren. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt in der technisch fehlerfreien Darstellung und der Sicherheit der Website (z. B. Abwehr von Angriffen).",
       },
       {
-        todo: "TODO(Lea): Speicherdauer der Logfiles laut gewähltem Hosting-Anbieter ergänzen.",
+        todo: "TODO(Lea): Speicherdauer der Logfiles laut gewähltem Hosting-Anbieter ergänzen und prüfen, ob der Anbieter die Logfiles selbst auswertet.",
       },
     ],
   },
@@ -153,6 +153,9 @@ const sections: Section[] = [
       {
         todo: "TODO(Lea): E-Mail-Anbieter (Postfach) nennen, falls er als Auftragsverarbeiter aufgeführt werden soll.",
       },
+      {
+        todo: "TODO(Lea): Sobald das Kontaktformular freigeschaltet ist: Abschnitt um das Formular und den Formular-Dienst (Anbieter, Serverstandort, Vertrag zur Auftragsverarbeitung) ergänzen, siehe docs/kontaktformular.md.",
+      },
     ],
   },
 
@@ -169,8 +172,11 @@ const sections: Section[] = [
         p: "Anbieter ist die OpenStreetMap Foundation (OSMF), Cambridge, Vereinigtes Königreich. Beim Laden der Karte wird deine IP-Adresse sowie technische Informationen deines Browsers an die Server von OpenStreetMap übertragen. Für das Vereinigte Königreich besteht ein Angemessenheitsbeschluss der EU-Kommission.",
       },
       {
+        todo: "TODO(Lea): Vor dem Livegang prüfen, ob der Angemessenheitsbeschluss für das Vereinigte Königreich noch gilt.",
+      },
+      {
         p:
-          'Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG), die du durch den Klick erteilst. Du kannst sie jederzeit mit Wirkung für die Zukunft widerrufen, indem du die Karte nicht erneut lädst. Mehr dazu in der <a href="https://osmfoundation.org/wiki/Privacy_Policy" class="' +
+          'Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG), die du durch den Klick erteilst. Du kannst sie jederzeit mit Wirkung für die Zukunft widerrufen, indem du die Seite neu lädst; die Karte wird dann erst nach einem erneuten Klick wieder geladen. Mehr dazu in der <a href="https://osmfoundation.org/wiki/Privacy_Policy" class="' +
           linkClass +
           '" rel="noopener noreferrer">Datenschutzerklärung der OpenStreetMap Foundation</a>.',
       },
@@ -187,16 +193,16 @@ const sections: Section[] = [
         p: `Für die Online-Terminbuchung nutze ich den Dienst ${booking.providerName} (${booking.providerLegal}). Wenn du einen Termin buchst, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, ggf. Telefonnummer), der gewählte Termin und die gewählte Leistung sowie technische Daten (z. B. IP-Adresse, Zeitpunkt der Buchung) an ${booking.providerName} übermittelt und dort gespeichert. ${booking.providerName} verarbeitet die Daten nach eigenen Angaben auf Servern in ${booking.serverLocation}.`,
       },
       {
-        p: "Zweck der Verarbeitung ist die Vereinbarung und Durchführung des Termins. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertrag bzw. vorvertragliche Maßnahmen). Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.",
+        p: "Zweck der Verarbeitung ist die Vereinbarung und Durchführung des Termins. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertrag bzw. vorvertragliche Maßnahmen).",
       },
       {
-        todo: "TODO(Lea): Abschluss des Vertrags zur Auftragsverarbeitung (AVV) mit dem Anbieter bestätigen und den Serverstandort mit dem AVV abgleichen (Zeeg nennt in der Hilfe zusätzlich die Niederlande).",
+        todo: "TODO(Lea): Vertrag zur Auftragsverarbeitung (AVV) mit dem Anbieter abschließen. Erst danach hier ergänzen: „Mit dem Anbieter habe ich einen Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO geschlossen.“ Außerdem den Serverstandort mit dem AVV abgleichen (Zeeg nennt in der Hilfe zusätzlich die Niederlande).",
       },
       {
         p: "Bitte gib im Buchungsformular keine Angaben zu deiner Gesundheit an. Darüber sprechen wir im Termin.",
       },
       {
-        p: `Auf der Seite „Termin buchen“ kannst du den Buchungskalender von ${booking.providerName} direkt laden. Der Kalender wird erst angezeigt, wenn du auf „Kalender laden“ klickst. Erst dann wird eine Verbindung zu den Servern von ${booking.providerName} aufgebaut und deine IP-Adresse und technische Browserdaten werden übermittelt. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Du kannst sie jederzeit widerrufen, indem du die Seite neu lädst. Alternativ kannst du die Buchungsseite direkt in einem neuen Tab öffnen.`,
+        p: `Auf der Seite „Termin buchen“ kannst du den Buchungskalender von ${booking.providerName} direkt laden. Der Kalender wird erst angezeigt, wenn du auf „Kalender laden“ klickst. Erst dann wird eine Verbindung zu den Servern von ${booking.providerName} aufgebaut und deine IP-Adresse und technische Browserdaten werden übermittelt. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Du kannst sie jederzeit mit Wirkung für die Zukunft widerrufen, indem du die Seite neu lädst; der Kalender wird dann erst nach einem erneuten Klick wieder geladen. Alternativ kannst du die Buchungsseite direkt in einem neuen Tab öffnen.`,
       },
       {
         p: `Weitere Informationen findest du in der <a href="${booking.privacyUrl}" class="${linkClass}" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von ${booking.providerName}</a>.`,
@@ -216,13 +222,13 @@ const sections: Section[] = [
         p: "Für eine individuelle Ernährungsberatung können Angaben zu deiner Gesundheit hilfreich sein, zum Beispiel Unverträglichkeiten, Vorerkrankungen, Medikamente oder Ernährungsgewohnheiten. Solche Gesundheitsdaten gehören zu den besonderen Kategorien personenbezogener Daten nach Art. 9 DSGVO und sind besonders geschützt.",
       },
       {
-        p: "Ich verarbeite Gesundheitsdaten <strong>nur mit deiner ausdrücklichen Einwilligung</strong> (Art. 9 Abs. 2 lit. a DSGVO) und nur, soweit sie für die Beratung erforderlich sind. Über diese Website selbst werden keine Gesundheitsdaten erhoben.",
+        p: "Ich verarbeite Gesundheitsdaten <strong>nur mit deiner ausdrücklichen Einwilligung</strong> (Art. 9 Abs. 2 lit. a DSGVO) und nur, soweit sie für die Beratung erforderlich sind. Über diese Website frage ich keine Gesundheitsdaten ab.",
       },
       {
         p: "Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt davon unberührt.",
       },
       {
-        todo: "TODO(Lea): Ergänzen, wie die Einwilligung eingeholt wird (z. B. schriftlich vor dem Erstgespräch), wo die Beratungsunterlagen gespeichert werden und wie lange sie aufbewahrt werden.",
+        todo: "TODO(Lea): Ergänzen, wie die Einwilligung eingeholt wird (z. B. schriftlich vor dem ersten Termin), wo die Beratungsunterlagen gespeichert werden und wie lange sie aufbewahrt werden.",
       },
     ],
   },
@@ -233,7 +239,7 @@ const sections: Section[] = [
     title: "Keine Cookies, kein Tracking",
     blocks: [
       {
-        p: "Diese Website setzt keine Cookies und speichert keine Informationen auf deinem Gerät. Es werden keine Analyse-, Tracking- oder Werbedienste eingesetzt und keine Social-Media-Plugins eingebunden. Deshalb erscheint auch kein Cookie-Banner.",
+        p: "Diese Website selbst setzt keine Cookies und speichert keine Informationen auf deinem Gerät. Es werden keine Analyse-, Tracking- oder Werbedienste eingesetzt und keine Social-Media-Plugins eingebunden. Deshalb erscheint auch kein Cookie-Banner. Lädst du per Klick die Karte oder den Buchungskalender, gelten dafür die Datenschutzbestimmungen des jeweiligen Anbieters (siehe oben); diese können eigene Cookies setzen.",
       },
       {
         p: "Sollte sich das ändern (z. B. durch eine datenschutzfreundliche Besucherstatistik), wird diese Datenschutzerklärung vorher angepasst.",
@@ -261,7 +267,7 @@ const sections: Section[] = [
       },
       { h3: "Widerspruchsrecht (Art. 21 DSGVO)" },
       {
-        p: "Wenn eine Verarbeitung auf Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) beruht, kannst du aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen. Ich verarbeite die Daten dann nicht mehr, es sei denn, es liegen zwingende schutzwürdige Gründe für die Verarbeitung vor.",
+        p: "Wenn eine Verarbeitung auf Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) beruht, kannst du aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen. Ich verarbeite die Daten dann nicht mehr, es sei denn, ich kann zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die deine Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.",
       },
       {
         p: "Für alle Anliegen genügt eine formlose Nachricht an die oben genannten Kontaktdaten.",

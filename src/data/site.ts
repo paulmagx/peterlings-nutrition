@@ -4,7 +4,7 @@ export const site = {
   shortName: "Peterlings",
   tagline: "Ernährungsberatung mit Lea Petruschka",
   description:
-    "Individuelle Ernährungsberatung mit Lea Petruschka – alltagstauglich, wissenschaftlich fundiert und ganzheitlich.",
+    "Individuelle Ernährungsberatung mit Lea Petruschka – alltagstauglich, persönlich und ganzheitlich.",
 };
 
 export type NavItem = { label: string; href: string; icon: string };
@@ -55,6 +55,6 @@ export const contact = {
   phone: "TODO(Lea)",
   street: "TODO(Lea) Straße und Hausnummer",
   city: "TODO(Lea) PLZ Ort",
-  /** Beratung vor Ort, online oder beides – mit Lea klären. */
+  /** TODO(Lea): Beratung vor Ort, online oder beides? Bitte bestätigen (wird auf Start- und Kontaktseite angezeigt). */
   formats: ["vor Ort", "online"],
 };
