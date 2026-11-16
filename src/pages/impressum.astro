@@ -1,4 +1,5 @@
 ---
+import { isPlaceholder } from "../lib/placeholder";
 /**
  * Impressum (Anbieterkennzeichnung nach § 5 DDG, ggf. § 18 Abs. 2 MStV).
  *
@@ -18,7 +19,6 @@ import PageIntro from "../components/PageIntro.astro";
 import { contact } from "../data/site";
 
 /** Lokale Hilfsfunktion: Ist der Wert noch ein Platzhalter aus site.ts? */
-const isPlaceholder = (value: string) => value.includes("TODO(");
 
 const todoClass =
   "rounded border border-dashed border-sage-600 bg-sage-100 px-1.5 py-0.5 font-semibold text-sage-900";
