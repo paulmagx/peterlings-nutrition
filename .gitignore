@@ -13,3 +13,6 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
+
+# Temporäre Arbeitskopien von Claude-Agenten
+.claude/worktrees/
