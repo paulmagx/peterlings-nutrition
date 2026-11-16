@@ -8,8 +8,16 @@ interface Props {
   /** Material-Symbols-Name für ein Icon rechts vom Text. */
   icon?: string;
   class?: string;
+  /** Öffnet den Link in einem neuen Tab (mit rel="noopener"). */
+  newTab?: boolean;
 }
-const { href, variant = "primary", icon, class: className = "" } = Astro.props;
+const {
+  href,
+  variant = "primary",
+  icon,
+  class: className = "",
+  newTab = false,
+} = Astro.props;
 const styles = {
   primary: "bg-sage-600 text-white shadow-lg hover:bg-sage-700",
   secondary: "border border-sage-300 bg-white text-sage-800 hover:bg-sage-50",
@@ -18,6 +26,8 @@ const styles = {
 
 <a
   href={href}
+  target={newTab ? "_blank" : undefined}
+  rel={newTab ? "noopener" : undefined}
   class:list={[
     "inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-bold transition active:scale-[0.98]",
     styles[variant],
