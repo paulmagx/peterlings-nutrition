@@ -20,14 +20,15 @@ Die Seite läuft dann unter http://localhost:4321 und lädt sich bei Änderungen
 
 ## Befehle
 
-| Befehl                 | Was er tut                                         |
-| ---------------------- | -------------------------------------------------- |
-| `npm run dev`          | Entwicklungsserver starten                         |
-| `npm run build`        | Fertige Website nach `dist/` bauen                 |
-| `npm run preview`      | Gebaute Website lokal ansehen                      |
-| `npm run check`        | Typprüfung                                         |
-| `npm run format`       | Code einheitlich formatieren (Prettier)            |
-| `npm run format:check` | Prüfen, ob alles formatiert ist (läuft auch in CI) |
+| Befehl                 | Was er tut                                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `npm run dev`          | Entwicklungsserver starten                                                                                               |
+| `npm run build`        | Fertige Website nach `dist/` bauen                                                                                       |
+| `npm run preview`      | Gebaute Website lokal ansehen                                                                                            |
+| `npm run check`        | Typprüfung                                                                                                               |
+| `npm run format`       | Code einheitlich formatieren (Prettier)                                                                                  |
+| `npm run format:check` | Prüfen, ob alles formatiert ist (läuft auch in CI)                                                                       |
+| `npm run check:links`  | Tote Links und Attrappen finden (nach `npm run build`; braucht Playwright, `-- --dev` prüft den Dev-Modus mit Entwürfen) |
 
 ## Aufbau
 

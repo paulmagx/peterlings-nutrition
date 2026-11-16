@@ -12,7 +12,7 @@ export type BookingProvider = "zeeg" | "etermin";
 
 /** Leistungen, für die es je eine eigene Buchungsseite beim Anbieter gibt. */
 export type BookingService =
-  "kennenlernen" | "einzelberatung" | "ernaehrungsplan" | "einkaufstraining";
+  "kennenlernen" | "einzelberatung" | "ernaehrungsplaene" | "einkaufstraining";
 
 export interface BookingConfig {
   /** Gewählter Anbieter (Empfehlung aus docs/buchungstool.md). */
