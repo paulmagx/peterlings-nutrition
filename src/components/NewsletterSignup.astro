@@ -1,0 +1,98 @@
+---
+/**
+ * Newsletter-Anmeldung mit Double-Opt-in (Bestätigungsmail kommt vom Dienst).
+ * Normales POST-Formular, funktioniert ohne JavaScript.
+ * Rendert nichts, solange newsletter.enabled false ist oder formAction ein Platzhalter ist.
+ */
+import Icon from "./Icon.astro";
+import { newsletter } from "../data/newsletter";
+import { isPlaceholder } from "../lib/placeholder";
+
+const show = newsletter.enabled && !isPlaceholder(newsletter.formAction);
+---
+
+{show && (
+  <section aria-labelledby="nl-heading" class="md:col-span-3">
+    <div class="rounded-2xl border border-sage-200 bg-white p-6">
+      <h2 id="nl-heading" class="flex items-center gap-2 text-lg font-bold">
+        <Icon name="mail-outline-rounded" class="size-6 text-sage-700" />
+        Newsletter
+      </h2>
+      <p class="mt-2 max-w-xl text-sm text-muted">
+        Ab und zu ein paar Gedanken und Tipps rund um Ernährung, direkt in dein
+        Postfach.
+      </p>
+
+      <form
+        action={newsletter.formAction}
+        method="post"
+        class="relative mt-4 grid max-w-xl gap-4"
+      >
+        <div>
+          <label for="nl-email" class="block font-semibold">
+            E-Mail
+          </label>
+          <input
+            id="nl-email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            class="mt-1 block w-full rounded-xl border border-sage-300 bg-white px-4 py-3 text-ink focus-visible:border-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
+          />
+        </div>
+
+        <div
+          class="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <label for="nl-website">Bitte leer lassen</label>
+          <input
+            id="nl-website"
+            name="website"
+            type="text"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="flex items-start gap-3 text-sm">
+          <input
+            id="nl-consent"
+            name="consent"
+            type="checkbox"
+            value="ja"
+            required
+            class="mt-1 size-5 shrink-0 accent-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
+          />
+          <label for="nl-consent">
+            Ich möchte den Newsletter von Peterlings Nutrition per E-Mail
+            erhalten (ca. einmal im Monat, mit Tipps und Neuigkeiten zu
+            Ernährung und Angeboten). Ich kann ihn jederzeit über den Link in
+            jeder E-Mail abbestellen. Infos dazu in der{" "}
+            <a
+              href={newsletter.privacyUrl}
+              class="font-semibold text-sage-700 underline"
+            >
+              Datenschutzerklärung
+            </a>
+            .
+          </label>
+        </div>
+
+        <p class="text-sm text-muted">
+          Du bekommst gleich eine E-Mail zur Bestätigung. Erst danach bist du
+          angemeldet.
+        </p>
+
+        <button
+          type="submit"
+          class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sage-600 px-6 py-3 text-base font-bold text-white shadow-lg transition hover:bg-sage-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600 active:scale-[0.98] sm:w-auto"
+        >
+          Anmelden
+          <Icon name="arrow-forward-rounded" class="size-5" />
+        </button>
+      </form>
+    </div>
+  </section>
+)}
