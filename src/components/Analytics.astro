@@ -1,0 +1,22 @@
+---
+/**
+ * Datenschutzfreundliche Besucherstatistik (Issue #36).
+ *
+ * Gibt das Tracking-Script NUR aus, wenn alle drei Bedingungen erfüllt sind:
+ * 1. `analytics.enabled` ist true,
+ * 2. `analytics.scriptSrc` ist kein Platzhalter ("TODO…"),
+ * 3. es ist ein Produktions-Build (`npm run build`, nicht `npm run dev`).
+ * Sonst entsteht im HTML kein Script-Tag.
+ */
+import { analytics } from "../data/analytics";
+import { isPlaceholder } from "../lib/placeholder";
+
+const shouldRender =
+  analytics.enabled &&
+  !isPlaceholder(analytics.scriptSrc) &&
+  import.meta.env.PROD;
+---
+
+{shouldRender && (
+  <script defer src={analytics.scriptSrc} data-domain={analytics.domain} />
+)}
