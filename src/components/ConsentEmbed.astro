@@ -1,0 +1,83 @@
+---
+/**
+ * Zwei-Klick-Lösung für externe Inhalte (Karte, Buchungstool, …).
+ * Vor dem Klick wird nichts vom Anbieter geladen; erst der Button fügt das iframe ein.
+ */
+interface Props {
+  /** Name des Anbieters, z. B. "OpenStreetMap". */
+  provider: string;
+  /** URL, die im iframe geladen wird. */
+  src: string;
+  /** Beschreibender Titel des iframes (für Screenreader). */
+  title: string;
+  /** Datenschutzerklärung des Anbieters. */
+  privacyUrl: string;
+  /** Beschriftung des Buttons. */
+  buttonLabel?: string;
+  /** Tailwind-Klassen für das Seitenverhältnis (verhindert Layoutsprünge). */
+  class?: string;
+}
+const {
+  provider,
+  src,
+  title,
+  privacyUrl,
+  buttonLabel = "Karte laden",
+  class: className = "aspect-[4/3] md:aspect-[16/10]",
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "consent-embed relative overflow-hidden rounded-2xl border border-sage-200 bg-sage-50",
+    className,
+  ]}
+  data-src={src}
+  data-title={title}
+>
+  <div class="consent-embed__prompt flex h-full flex-col items-start justify-center gap-4 p-6">
+    <p class="font-bold">{title}</p>
+    <p class="max-w-prose text-sm text-muted">
+      Wenn du den Inhalt lädst, wird eine Verbindung zu {provider} aufgebaut und
+      dabei werden Daten (z. B. deine IP-Adresse) an den Anbieter übertragen.
+      Mehr dazu in der{" "}
+      <a
+        href={privacyUrl}
+        class="font-semibold text-sage-700 underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Datenschutzerklärung von {provider}
+      </a>
+      .
+    </p>
+    <button
+      type="button"
+      class="consent-embed__button inline-flex items-center justify-center rounded-xl bg-sage-600 px-6 py-3.5 font-bold text-white shadow-lg transition hover:bg-sage-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-700 active:scale-[0.98]"
+    >
+      {buttonLabel}
+    </button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".consent-embed").forEach((box) => {
+    const button = box.querySelector<HTMLButtonElement>(
+      ".consent-embed__button",
+    );
+    const prompt = box.querySelector<HTMLElement>(".consent-embed__prompt");
+    const src = box.dataset.src;
+    if (!button || !prompt || !src) return;
+    button.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.src = src;
+      frame.title = box.dataset.title ?? "";
+      frame.referrerPolicy = "no-referrer";
+      frame.className = "absolute inset-0 h-full w-full border-0";
+      prompt.replaceWith(frame);
+      // Der Button verschwindet, daher den Fokus auf das neue iframe setzen.
+      frame.tabIndex = 0;
+      frame.focus();
+    });
+  });
+</script>

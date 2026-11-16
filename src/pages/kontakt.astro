@@ -1,0 +1,130 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import ConsentEmbed from "../components/ConsentEmbed.astro";
+import { contact } from "../data/site";
+import { isPlaceholder } from "../lib/placeholder";
+
+const emailOk = !isPlaceholder(contact.email);
+const phoneOk = !isPlaceholder(contact.phone);
+const addressOk =
+  !isPlaceholder(contact.street) && !isPlaceholder(contact.city);
+
+// TODO(Lea): Adresse/Koordinaten – Platzhalter-Ausschnitt (Mitte Deutschlands), bitte durch Praxisstandort ersetzen.
+const mapSrc =
+  "https://www.openstreetmap.org/export/embed.html?bbox=9.5%2C50.9%2C10.5%2C51.4&layer=mapnik";
+
+const card = "rounded-2xl border border-sage-200 bg-white p-6";
+const heading = "flex items-center gap-2 text-lg font-bold";
+const link = "font-semibold text-sage-700 underline break-words";
+---
+
+<BaseLayout
+  title="Kontakt"
+  description="So erreichst du Lea Petruschka: E-Mail, Telefon, Adresse und Beratungsformate."
+>
+  <PageIntro
+    eyebrow="Kontakt"
+    title="Schön, dass du "
+    highlight="dich meldest."
+    lead="Schreib mir oder ruf an – ich melde mich so bald wie möglich bei dir."
+  />
+
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 pb-16 sm:px-6 md:grid-cols-2">
+    <div class="grid content-start gap-4">
+      <section class={card}>
+        <h2 class={heading}>
+          <Icon name="mail-outline-rounded" class="size-6 text-sage-700" />
+          E-Mail
+        </h2>
+        <p class="mt-2">
+          {emailOk ? (
+            <a href={`mailto:${contact.email}`} class={link}>
+              {contact.email}
+            </a>
+          ) : (
+            <span class="text-sm text-muted">wird ergänzt</span>
+          )}
+        </p>
+      </section>
+
+      <section class={card}>
+        <h2 class={heading}>
+          <Icon name="call-outline-rounded" class="size-6 text-sage-700" />
+          Telefon
+        </h2>
+        <p class="mt-2">
+          {phoneOk ? (
+            <a
+              href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}
+              class={link}
+            >
+              {contact.phone}
+            </a>
+          ) : (
+            <span class="text-sm text-muted">wird ergänzt</span>
+          )}
+        </p>
+      </section>
+
+      <section class={card}>
+        <h2 class={heading}>
+          <Icon
+            name="location-on-outline-rounded"
+            class="size-6 text-sage-700"
+          />
+          Adresse
+        </h2>
+        <div class="mt-2">
+          {addressOk ? (
+            <address class="not-italic">
+              {contact.owner}
+              <br />
+              {contact.street}
+              <br />
+              {contact.city}
+            </address>
+          ) : (
+            <span class="text-sm text-muted">wird ergänzt</span>
+          )}
+        </div>
+      </section>
+
+      <section class={card}>
+        <h2 class={heading}>
+          <Icon name="forum-outline-rounded" class="size-6 text-sage-700" />
+          Beratungsformate
+        </h2>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {contact.formats.map((format) => (
+            <li class="rounded-full bg-sage-100 px-3 py-1 text-sm font-semibold text-sage-800">
+              {format}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+
+    <div class="grid content-start gap-4">
+      <ConsentEmbed
+        provider="OpenStreetMap"
+        src={mapSrc}
+        title="Karte mit dem Standort der Praxis"
+        privacyUrl="https://wiki.osmfoundation.org/wiki/Privacy_Policy"
+      />
+
+      <!-- Kontaktformular folgt in Issue #27 -->
+      <section class="rounded-2xl bg-sage-50 p-6">
+        <h2 class="text-lg font-bold">Kontaktformular folgt</h2>
+        <p class="mt-2 text-muted">
+          Schreib mir gern eine E-Mail – oder such dir direkt einen Termin aus.
+        </p>
+        <Button href="/termin" icon="arrow-forward-rounded" class="mt-4">
+          Termin buchen
+        </Button>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
