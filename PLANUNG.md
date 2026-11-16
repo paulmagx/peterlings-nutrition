@@ -6,7 +6,28 @@ Dieses Dokument ist der Fahrplan, um die Website strukturiert weiterzubauen. Es 
 
 ---
 
-## 1. Ist-Zustand
+## Stand (16.11.2026)
+
+Die Website ist technisch fertig gebaut. Was fehlt, sind fast nur noch **Inhalte und Entscheidungen von Lea** – überall dort steht im Code `TODO(Lea)`.
+
+| Issue              | Thema                                                      | Stand                                                                              |
+| ------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| #7–#10, #17, #18   | Fundament (Astro, Tokens, Fonts, Layout, CI)               | ✅ fertig                                                                          |
+| #11–#16            | Startseite, Leistungen, Über mich, Kontakt, 404, Attrappen | ✅ fertig                                                                          |
+| #19, #23           | „du“, Formulierungsleitfaden, Textprüfung                  | ✅ fertig (`docs/textpruefung*.md`)                                                |
+| #29, #30, #31, #33 | SEO, Barrierefreiheit, Lighthouse, Favicon                 | ✅ fertig (`docs/barrierefreiheit.md`, `docs/qualitaet.md`)                        |
+| #34, #37           | Wissen/Rezepte-Blog, FAQ                                   | ✅ gebaut – Beispielbeiträge sind Entwürfe, FAQ-Antworten teils `TODO(Lea)`        |
+| #20                | Echte Texte, Leistungen, Preise                            | ⏳ wartet auf Lea – Fragebogen: `docs/inhalte-von-lea.md`                          |
+| #21, #22           | Fotos, Kundenstimmen                                       | ⏳ wartet auf Lea – Technik fertig, Inhalte fehlen                                 |
+| #24                | Impressum, Datenschutz                                     | ⏳ Vorlage fertig – Daten von Lea + rechtliche Prüfung nötig                       |
+| #25, #26, #28      | Buchungstool, /termin, Testplan                            | ⏳ Seite fertig – Konto bei Zeeg anlegen (`docs/buchungstool.md`), dann testen     |
+| #27                | Kontaktformular                                            | ⏳ Formular fertig – Formular-Dienst wählen (`docs/kontaktformular.md`)            |
+| #32                | Hosting & Domain                                           | ⏳ `netlify.toml` fertig – Konto + Domain einrichten (`docs/hosting.md`)           |
+| #35, #36           | Newsletter, Statistik                                      | ⏳ eingebaut, aber aus – Dienst wählen (`docs/newsletter.md`, `docs/statistik.md`) |
+
+Prüfungen: `npm run check:links` und `npm run check:a11y` (lokal, mit Playwright).
+
+## 1. Ist-Zustand (Ausgangslage)
 
 Das Repository enthält einen **klickbaren Mobile-Prototyp**, noch keine einsatzfähige Website:
 
