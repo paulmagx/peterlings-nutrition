@@ -1,0 +1,25 @@
+---
+/** Einheitlicher Kopfbereich für Unterseiten: kleine Überzeile, Überschrift, Einleitung. */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Optional hervorgehobener Teil der Überschrift (wird grün dargestellt). */
+  highlight?: string;
+  lead?: string;
+}
+const { eyebrow, title, highlight, lead } = Astro.props;
+---
+
+<section class="mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6 md:pt-20">
+  {eyebrow && (
+    <p class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
+      {eyebrow}
+    </p>
+  )}
+  <h1 class="max-w-3xl text-3xl leading-tight font-extrabold md:text-5xl">
+    {title}
+    {highlight && <span class="text-sage-700">{highlight}</span>}
+  </h1>
+  {lead && <p class="mt-4 max-w-2xl text-lg text-muted">{lead}</p>}
+  <slot />
+</section>

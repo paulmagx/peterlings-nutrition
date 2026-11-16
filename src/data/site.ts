@@ -31,3 +31,18 @@ export const legalNav = [
   { label: "Impressum", href: "/impressum" },
   { label: "Datenschutz", href: "/datenschutz" },
 ];
+
+/**
+ * Kontakt- und Praxisdaten.
+ * Alles mit "TODO(Lea)" ist ein Platzhalter und muss vor dem Livegang ersetzt werden (Issue #20).
+ * Hier niemals erfundene Daten als echt ausgeben.
+ */
+export const contact = {
+  owner: "Lea Petruschka",
+  email: "TODO(Lea)@peterlings-nutrition.de",
+  phone: "TODO(Lea)",
+  street: "TODO(Lea) Straße und Hausnummer",
+  city: "TODO(Lea) PLZ Ort",
+  /** Beratung vor Ort, online oder beides – mit Lea klären. */
+  formats: ["vor Ort", "online"],
+};
