@@ -1,0 +1,75 @@
+---
+/** Karte für eine Leistung. Die empfohlene Leistung wird hervorgehoben. */
+import type { Service } from "../data/services";
+import Icon from "./Icon.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  service: Service;
+  /** Ziel des Anfrage-Buttons. */
+  href?: string;
+}
+const { service, href = "/termin" } = Astro.props;
+const {
+  id,
+  category,
+  title,
+  price,
+  priceNote,
+  summary,
+  features,
+  highlighted,
+  icon,
+} = service;
+---
+
+<article
+  id={id}
+  class:list={[
+    "relative flex h-full scroll-mt-24 flex-col overflow-hidden rounded-2xl bg-white p-6 shadow-sm",
+    highlighted
+      ? "border-2 border-sage-600 shadow-lg lg:-my-2"
+      : "border border-sage-200",
+  ]}
+>
+  {highlighted && (
+    <span class="absolute top-0 right-0 rounded-bl-xl bg-sage-600 px-3 py-1 text-xs font-bold tracking-wider text-white uppercase">
+      Empfehlung
+    </span>
+  )}
+  <div class="mb-4 flex items-start justify-between gap-4">
+    <div>
+      <p class="flex items-center gap-2 text-xs font-bold tracking-widest text-sage-700 uppercase">
+        <Icon name={icon} class="size-5" />
+        {category}
+      </p>
+      <h3 class="mt-2 text-xl font-bold">{title}</h3>
+    </div>
+    <p class="shrink-0 text-right">
+      <span class="text-2xl font-extrabold">{price}&nbsp;€</span>
+      <span class="block text-xs tracking-wider text-muted uppercase">
+        {priceNote}
+      </span>
+    </p>
+  </div>
+  <p class="mb-6 text-sm leading-relaxed text-muted">{summary}</p>
+  <ul class="mb-8 space-y-3">
+    {features.map((feature) => (
+      <li class="flex items-center gap-3 text-sm">
+        <Icon
+          name="check-circle-outline-rounded"
+          class="size-5 shrink-0 text-sage-600"
+        />
+        {feature}
+      </li>
+    ))}
+  </ul>
+  <Button
+    href={href}
+    variant={highlighted ? "primary" : "secondary"}
+    icon={highlighted ? "arrow-forward-rounded" : undefined}
+    class="mt-auto w-full"
+  >
+    Jetzt anfragen
+  </Button>
+</article>

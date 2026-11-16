@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import { services } from "../data/services";
+
+// Generische Schritte, keine festen Zusagen zu Dauer oder Ablauf.
+// TODO(Lea): Ablauf der Beratung prüfen und anpassen
+const steps = [
+  {
+    icon: "mail-outline-rounded",
+    title: "Anfrage",
+    text: "Du schickst mir deine Anfrage und sagst kurz, worum es dir geht.",
+  },
+  {
+    icon: "forum-outline-rounded",
+    title: "Beratung",
+    text: "Wir besprechen deine Situation und deine Ziele.",
+  },
+  {
+    icon: "checklist-rounded",
+    title: "Umsetzung",
+    text: "Du bekommst Empfehlungen, die zu deinem Alltag passen.",
+  },
+];
+---
+
+<BaseLayout
+  title="Leistungen"
+  description="Einzelberatung, individuelle Ernährungspläne und Einkaufstraining mit Lea Petruschka."
+>
+  <PageIntro
+    eyebrow="Leistungen"
+    title="Wähle das Angebot, das"
+    highlight="zu dir passt."
+    lead="Professionelle Begleitung für deine Ernährung und deinen Lebensstil, mit Lea Petruschka."
+  />
+
+  <section
+    class="mx-auto max-w-6xl px-4 pb-12 sm:px-6"
+    aria-label="Unsere Leistungen"
+  >
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((service) => (
+        <ServiceCard service={service} />
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <h2 class="text-2xl font-extrabold md:text-3xl">
+      So läuft die Beratung ab
+    </h2>
+    <ol class="mt-8 grid gap-6 md:grid-cols-3">
+      {steps.map((step, i) => (
+        <li class="rounded-2xl bg-sage-50 p-6">
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 items-center justify-center rounded-full bg-sage-600 font-bold text-white">
+              {i + 1}
+            </span>
+            <Icon name={step.icon} class="size-6 text-sage-700" />
+          </div>
+          <h3 class="mt-4 text-lg font-bold">{step.title}</h3>
+          <p class="mt-1 text-sm text-muted">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pt-4 pb-16 sm:px-6">
+    <div class="rounded-2xl border border-sage-200 bg-sage-100 p-8 text-center md:p-12">
+      <h2 class="text-2xl font-extrabold">
+        Nicht sicher, welches Paket passt?
+      </h2>
+      <!-- TODO(Lea): Gibt es ein kostenloses Kennenlerngespräch? Wenn ja, hier erwähnen. -->
+      <p class="mx-auto mt-3 max-w-xl text-muted">
+        Schreib mir einfach, was dich beschäftigt. Gemeinsam finden wir heraus,
+        welches Angebot für dich sinnvoll ist.
+      </p>
+      <Button href="/kontakt" variant="secondary" class="mt-6">
+        Kontakt aufnehmen
+      </Button>
+    </div>
+  </section>
+</BaseLayout>
