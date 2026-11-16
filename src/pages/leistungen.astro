@@ -5,6 +5,7 @@ import ServiceCard from "../components/ServiceCard.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
 import { services } from "../data/services";
+import { booking, isBookingConfigured } from "../data/booking";
 
 // Generische Schritte, keine festen Zusagen zu Dauer oder Ablauf.
 // TODO(Lea): Ablauf der Beratung prüfen und anpassen
@@ -44,7 +45,16 @@ const steps = [
   >
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
-        <ServiceCard service={service} />
+        <ServiceCard
+          service={service}
+          href={
+            (isBookingConfigured &&
+              booking.serviceUrls[
+                service.id as keyof typeof booking.serviceUrls
+              ]) ||
+            "/termin"
+          }
+        />
       ))}
     </div>
   </section>
