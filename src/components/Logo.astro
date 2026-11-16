@@ -1,0 +1,15 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+---
+
+<a
+  href="/"
+  class="flex items-center gap-2"
+  aria-label={`${site.name} – zur Startseite`}
+>
+  <span class="flex size-9 items-center justify-center rounded-lg bg-sage-600 text-white">
+    <Icon name="eco-outline-rounded" class="size-5" />
+  </span>
+  <span class="text-lg font-bold tracking-tight">{site.shortName}</span>
+</a>

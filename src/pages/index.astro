@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<!-- Platzhalter: Die eigentliche Startseite wird in Meilenstein 1 aus legacy/index.html übertragen. -->
+<BaseLayout>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
+    <p class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
+      Ernährungsberatung mit Lea Petruschka
+    </p>
+    <h1 class="max-w-2xl text-4xl leading-tight font-extrabold md:text-5xl">
+      Gesund essen, das in deinen{" "}
+      <span class="text-sage-700">Alltag passt.</span>
+    </h1>
+    <p class="mt-4 max-w-xl text-muted">
+      Die neue Website entsteht gerade. Dieser Platzhalter zeigt das neue
+      Fundament: Layout, Navigation, Farben und Schrift.
+    </p>
+    <a
+      href="/termin"
+      class="mt-8 inline-flex items-center gap-2 rounded-xl bg-sage-600 px-6 py-4 font-bold text-white shadow-lg transition hover:bg-sage-700 active:scale-[0.98]"
+    >
+      Beratung starten
+      <Icon name="arrow-forward-rounded" class="size-5" />
+    </a>
+  </section>
+</BaseLayout>

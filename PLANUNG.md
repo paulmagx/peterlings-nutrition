@@ -10,16 +10,17 @@ Dieses Dokument ist der Fahrplan, um die Website strukturiert weiterzubauen. Es 
 
 Das Repository enthält einen **klickbaren Mobile-Prototyp**, noch keine einsatzfähige Website:
 
-| Datei | Inhalt | Zustand |
-|---|---|---|
-| `index.html` | Startseite: Hero mit Lea Petruschka, Über-mich-Teaser, 3 Leistungen, 1 Kundenstimme, Newsletter, Footer | Optik fertig, Funktionen sind Attrappen |
-| `services.html` | 3 Pakete mit Preisen (89 €, 129 €, 69 €), Tab „Preise/Übersicht“ | Tabs ohne Funktion |
-| `booking.html` | Kalender (fest: Oktober 2024), Uhrzeiten, Formular, Kundenstimmen, „Jetzt verbindlich buchen“ | Reine Demo (`alert(...)`), nichts wird gespeichert oder versendet |
-| `start_server.ps1` | Lokaler Webserver für Windows/PowerShell | Funktioniert nur unter Windows |
+| Datei              | Inhalt                                                                                                  | Zustand                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `index.html`       | Startseite: Hero mit Lea Petruschka, Über-mich-Teaser, 3 Leistungen, 1 Kundenstimme, Newsletter, Footer | Optik fertig, Funktionen sind Attrappen                           |
+| `services.html`    | 3 Pakete mit Preisen (89 €, 129 €, 69 €), Tab „Preise/Übersicht“                                        | Tabs ohne Funktion                                                |
+| `booking.html`     | Kalender (fest: Oktober 2024), Uhrzeiten, Formular, Kundenstimmen, „Jetzt verbindlich buchen“           | Reine Demo (`alert(...)`), nichts wird gespeichert oder versendet |
+| `start_server.ps1` | Lokaler Webserver für Windows/PowerShell                                                                | Funktioniert nur unter Windows                                    |
 
 ### Festgestellte Probleme
 
 **Technik & Struktur**
+
 - Tailwind wird über das Play-CDN (`cdn.tailwindcss.com`) geladen – laut Tailwind ausdrücklich nicht für den Produktivbetrieb gedacht (langsam, Layoutsprung beim Laden).
 - Jede Seite hat ihre **eigene Tailwind-Konfiguration** mit unterschiedlichem Grün: `#8fae90` (Start), `#7ba37b` (Leistungen), `#8ca68e` (Buchung).
 - Header, Navigation und Footer sind auf jeder Seite von Hand kopiert und **weichen voneinander ab** (Start: „Start/Termine/Wissen/Profil“, Leistungen: „Home/Pakete/Rezepte/Profil“, Buchung: keine Navigation).
@@ -29,6 +30,7 @@ Das Repository enthält einen **klickbaren Mobile-Prototyp**, noch keine einsatz
 - Doppelter `<style>`-Block in `index.html`, Copyright „2024“.
 
 **Inhalte**
+
 - Ansprache uneinheitlich: Startseite „Sie“, Leistungen und Buchung „du“.
 - Preise widersprechen sich: Buchung zeigt 75 €, Einzelberatung kostet 89 €.
 - Leistungen auf der Startseite (Darmgesundheit, Stoffwechsel, Mentale Klarheit) passen nicht zu den Paketen auf der Leistungsseite.
@@ -36,6 +38,7 @@ Das Repository enthält einen **klickbaren Mobile-Prototyp**, noch keine einsatz
 - Tote Elemente: Profil, Rezepte, „…“-Menüs, Social-Icons, Newsletter, „Kostenloses Kennenlerngespräch“-Link, Kalenderpfeile.
 
 **Rechtliches (Deutschland) – vor einem Livegang zwingend**
+
 - Kein **Impressum** und keine **Datenschutzerklärung** (Links zeigen auf `#`).
 - **Google Fonts** werden von Google-Servern geladen → ohne Einwilligung datenschutzrechtlich angreifbar; Schriften lokal einbinden.
 - Buchungsformular fragt Gesundheitsziele ab → das sind **Gesundheitsdaten** (Art. 9 DSGVO), die besonders geschützt werden müssen.
@@ -46,9 +49,9 @@ Das Repository enthält einen **klickbaren Mobile-Prototyp**, noch keine einsatz
 
 ---
 
-## 2. Offene Entscheidungen (vorab klären)
+## 2. Entscheidungen
 
-Diese Punkte bestimmen den weiteren Bau. Empfehlung jeweils fett.
+Entschieden (November 2026): Es gelten die fett markierten Empfehlungen. Ansprache: **„du“**. Offen sind nur noch Hosting/Domain (Meilenstein 4) und die Inhalte von Lea (Meilenstein 2).
 
 1. **Ziel der Website** – Visitenkarte + Terminanfrage, oder auch Wissen/Rezepte-Bereich und Kundenkonto („Profil“)?
    → **Phase 1: Visitenkarte + Terminbuchung. Rezepte/Blog später. Kundenkonto streichen** (hoher Aufwand, Datenschutzrisiko, wenig Nutzen).
@@ -67,15 +70,15 @@ Diese Punkte bestimmen den weiteren Bau. Empfehlung jeweils fett.
 
 ### Seitenstruktur (Phase 1)
 
-| Seite | Zweck |
-|---|---|
-| Start (`/`) | Wer, was, für wen – mit klarem Aufruf „Termin buchen“ |
-| Leistungen (`/leistungen`) | Pakete, Ablauf, Preise, FAQ |
-| Über mich (`/ueber-mich`) | Lea, Qualifikationen, Arbeitsweise |
-| Termin (`/termin`) | Eingebettetes Buchungstool oder Anfrageformular |
-| Kontakt (`/kontakt`) | Adresse, E-Mail, Telefon, ggf. Karte (mit Einwilligung) |
-| Impressum, Datenschutz | Pflichtseiten |
-| 404 | Fehlerseite |
+| Seite                      | Zweck                                                   |
+| -------------------------- | ------------------------------------------------------- |
+| Start (`/`)                | Wer, was, für wen – mit klarem Aufruf „Termin buchen“   |
+| Leistungen (`/leistungen`) | Pakete, Ablauf, Preise, FAQ                             |
+| Über mich (`/ueber-mich`)  | Lea, Qualifikationen, Arbeitsweise                      |
+| Termin (`/termin`)         | Eingebettetes Buchungstool oder Anfrageformular         |
+| Kontakt (`/kontakt`)       | Adresse, E-Mail, Telefon, ggf. Karte (mit Einwilligung) |
+| Impressum, Datenschutz     | Pflichtseiten                                           |
+| 404                        | Fehlerseite                                             |
 
 Später (Phase 2): Wissen/Rezepte als Blog, Newsletter.
 
@@ -110,14 +113,16 @@ peterlings-nutrition/
 ## 4. Arbeitspakete
 
 ### Meilenstein 0 – Aufräumen & Fundament
-- [ ] Bisherige HTML-Dateien nach `legacy/` verschieben (als Design-Referenz)
-- [ ] Astro-Projekt mit Tailwind anlegen, `README.md` mit Startanleitung (`npm install`, `npm run dev`) – ersetzt `start_server.ps1`
-- [ ] Design-Tokens zentral definieren (Farben, Radien, Schrift)
-- [ ] Manrope und Material Symbols lokal einbinden
-- [ ] `BaseLayout` mit Header, Footer, mobiler Navigation – **eine** Navigation für alle Seiten
-- [ ] `.gitignore`, Prettier, GitHub-Action, die bei jedem Push den Build prüft
+
+- [x] Bisherige HTML-Dateien nach `legacy/` verschieben (als Design-Referenz)
+- [x] Astro-Projekt mit Tailwind anlegen, `README.md` mit Startanleitung (`npm install`, `npm run dev`) – ersetzt `start_server.ps1`
+- [x] Design-Tokens zentral definieren (Farben, Radien, Schrift)
+- [x] Manrope und Material Symbols lokal einbinden
+- [x] `BaseLayout` mit Header, Footer, mobiler Navigation – **eine** Navigation für alle Seiten
+- [x] `.gitignore`, Prettier, GitHub-Action, die bei jedem Push den Build prüft
 
 ### Meilenstein 1 – Seiten nachbauen
+
 - [ ] Startseite aus `legacy/index.html` übertragen, responsive für Desktop
 - [ ] Leistungsseite aus `legacy/services.html`, Leistungen als Daten (eine Quelle für Start- und Leistungsseite)
 - [ ] Über-mich-Seite
@@ -126,6 +131,7 @@ peterlings-nutrition/
 - [ ] Alle Attrappen entfernen oder funktionsfähig machen (Profil, Rezepte, „…“-Menüs, Tabs)
 
 ### Meilenstein 2 – Inhalte & Recht
+
 - [ ] Ansprache vereinheitlichen
 - [ ] Echte Texte, Leistungen und Preise von Lea einpflegen (Preis-Widerspruch 75 €/89 € auflösen)
 - [ ] Eigene Fotos (Porträt, Praxis/Food), komprimiert als WebP/AVIF
@@ -134,12 +140,14 @@ peterlings-nutrition/
 - [ ] Impressum und Datenschutzerklärung (z. B. mit Generator von eRecht24 o. Ä., Dienste wie Buchungstool/Hosting aufnehmen)
 
 ### Meilenstein 3 – Terminbuchung & Kontakt
+
 - [ ] Buchungstool auswählen und Konto einrichten (Leistungen, Dauer, Preise, Verfügbarkeiten)
 - [ ] Auf `/termin` einbetten – erst nach Einwilligung laden (Zwei-Klick-Lösung) oder als Link
 - [ ] Alternativ/zusätzlich Kontaktformular (z. B. Netlify Forms, Formspree) mit Datenschutzhinweis, ohne unnötige Gesundheitsdaten
 - [ ] Buchungs- und Bestätigungsmails testen
 
 ### Meilenstein 4 – Qualität & Livegang
+
 - [ ] SEO: Titel/Beschreibung je Seite, Open-Graph-Bild, `sitemap.xml`, `robots.txt`, strukturierte Daten (`LocalBusiness`)
 - [ ] Barrierefreiheit: echte Links statt `onclick`, Alt-Texte, Fokus-Stile, Kontrast, Formular-Labels
 - [ ] Lighthouse-Check (Ziel: ≥ 90 in allen Kategorien), Test auf Handy und Desktop
@@ -147,6 +155,7 @@ peterlings-nutrition/
 - [ ] Favicon, Social-Media-Links (nur echte Profile)
 
 ### Meilenstein 5 – Ausbau (nach dem Livegang)
+
 - [ ] Bereich „Wissen/Rezepte“ als Blog mit Markdown-Beiträgen
 - [ ] Newsletter mit Double-Opt-in (z. B. Brevo, CleverReach)
 - [ ] Datenschutzfreundliche Besucherstatistik (z. B. Plausible, ohne Cookies)
@@ -157,7 +166,7 @@ peterlings-nutrition/
 ## 5. Arbeitsweise
 
 - **Ein Meilenstein nach dem anderen**, jeweils auf eigenem Branch, Zusammenführung über Pull Request.
-- Die Arbeitspakete lassen sich als GitHub-Issues anlegen (ein Issue pro Checkbox, ein Milestone pro Meilenstein), damit der Fortschritt sichtbar ist.
+- Jedes Arbeitspaket ist ein GitHub-Issue. Je Meilenstein gibt es ein Sammel-Issue (#1–#6) mit den Einzelaufgaben als Sub-Issues und ein Label `meilenstein-N`.
 - Inhalte (Texte, Preise, Kundenstimmen) liegen getrennt vom Layout in `src/content/`, damit sie ohne Code-Kenntnisse angepasst werden können.
 
-**Nächster konkreter Schritt:** Entscheidungen aus Abschnitt 2 treffen, dann Meilenstein 0 umsetzen.
+**Nächster konkreter Schritt:** Meilenstein 1 – Seiten nachbauen.

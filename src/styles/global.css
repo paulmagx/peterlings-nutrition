@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/*
+ * Design-Tokens – die einzige Stelle, an der Farben und Schrift festgelegt werden.
+ *
+ * Salbeigrün-Skala auf Basis des Prototyps (#8fae90 / #7ba37b).
+ * Kontrast (WCAG AA, mind. 4.5:1 für normalen Text):
+ *   - Weißer Text auf sage-600 (#557a56): 4.88:1 → Buttons
+ *   - sage-700 (#466447) auf Weiß: > 6:1      → farbiger Text, Links
+ *   - sage-400/500 nur für Flächen und Icons, nie für Fließtext
+ */
+@theme {
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-sage-50: #f3f7f3;
+  --color-sage-100: #e6eee6;
+  --color-sage-200: #cddccd;
+  --color-sage-300: #afc7b0;
+  --color-sage-400: #8fae90;
+  --color-sage-500: #7ba37b;
+  --color-sage-600: #557a56;
+  --color-sage-700: #466447;
+  --color-sage-800: #3d573e;
+  --color-sage-900: #2a3b2b;
+  --color-sage-950: #1a1f1a;
+
+  --color-surface: #fcfdfc;
+  --color-ink: #1e293b;
+  --color-muted: #475569;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-ink font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :focus-visible {
+    @apply outline-sage-600 outline-2 outline-offset-2;
+  }
+}

@@ -1,0 +1,49 @@
+---
+import Logo from "./Logo.astro";
+import { site, mainNav, legalNav } from "../data/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-sage-200/60 bg-sage-50">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 pt-12 pb-28 sm:px-6 md:grid-cols-[2fr_1fr_1fr] md:pb-12">
+    <div class="space-y-3">
+      <Logo />
+      <p class="max-w-xs text-sm text-muted">{site.tagline}</p>
+    </div>
+
+    <nav aria-label="Seiten">
+      <h2 class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
+        Seiten
+      </h2>
+      <ul class="space-y-2 text-sm">
+        {mainNav.map((item) => (
+          <li>
+            <a href={item.href} class="text-muted hover:text-sage-700">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-label="Rechtliches">
+      <h2 class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
+        Rechtliches
+      </h2>
+      <ul class="space-y-2 text-sm">
+        {legalNav.map((item) => (
+          <li>
+            <a href={item.href} class="text-muted hover:text-sage-700">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <p class="text-xs text-slate-500 md:col-span-3">
+      © {year} {site.name}
+    </p>
+  </div>
+</footer>
