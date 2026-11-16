@@ -63,6 +63,25 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Sticky-Header (oben) und Tab-Leiste (unten, nur Handy) dürfen fokussierte
+       Elemente und Sprungziele nicht verdecken (WCAG 2.4.11). */
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: 6rem;
+  }
+
+  @media (min-width: 48rem) {
+    html {
+      scroll-padding-bottom: 1rem;
+    }
+  }
+
+  /* Lange Wörter (z. B. „Ernährungsberatung“) bei schmalen Fenstern und 400 % Zoom
+     umbrechen statt waagerecht überlaufen zu lassen (WCAG 1.4.10). */
+  h1,
+  h2,
+  h3 {
+    hyphens: auto;
+    overflow-wrap: break-word;
   }
 
   body {
@@ -80,5 +99,26 @@
 
   :focus-visible {
     @apply outline-sage-600 outline-2 outline-offset-2;
+  }
+
+  /* Weniger Bewegung, wenn im Betriebssystem eingestellt (WCAG 2.3.3, Best Practice). */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Kein „Eindrücken“ der Buttons (active:scale-…) */
+    :active {
+      scale: none !important;
+    }
   }
 }
