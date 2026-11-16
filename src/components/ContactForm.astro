@@ -1,0 +1,225 @@
+---
+/** Kontaktformular. Ohne echten Endpunkt (siehe src/data/forms.ts) nur Hinweis + mailto-Link. */
+import Icon from "./Icon.astro";
+import { contact } from "../data/site";
+import { contactFormEndpoint } from "../data/forms";
+import { isPlaceholder } from "../lib/placeholder";
+
+const endpointOk = !isPlaceholder(contactFormEndpoint);
+const emailOk = !isPlaceholder(contact.email);
+
+const field =
+  "mt-1 block w-full rounded-xl border border-sage-300 bg-white px-4 py-3 text-ink focus-visible:border-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600";
+const label = "block font-semibold";
+const hint = "mt-1 text-sm text-muted";
+---
+
+<section class="rounded-2xl border border-sage-200 bg-white p-6">
+  <h2 class="flex items-center gap-2 text-lg font-bold">
+    <Icon name="mail-outline-rounded" class="size-6 text-sage-700" />
+    Schreib mir
+  </h2>
+
+  {endpointOk ? (
+    <form
+      id="contact-form"
+      action={contactFormEndpoint}
+      method="post"
+      class="relative mt-4 grid gap-5"
+    >
+      <p class={hint}>
+        Bitte schick mir hier noch keine ausführlichen Gesundheitsdaten –
+        darüber sprechen wir im Termin.
+      </p>
+
+      <div>
+        <label for="cf-name" class={label}>
+          Name
+        </label>
+        <input
+          id="cf-name"
+          name="name"
+          type="text"
+          required
+          autocomplete="name"
+          aria-describedby="cf-name-hint"
+          class={field}
+        />
+        <p id="cf-name-hint" class={hint}>
+          Pflichtfeld. Wie darf ich dich ansprechen?
+        </p>
+      </div>
+
+      <div>
+        <label for="cf-email" class={label}>
+          E-Mail
+        </label>
+        <input
+          id="cf-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          aria-describedby="cf-email-hint"
+          class={field}
+        />
+        <p id="cf-email-hint" class={hint}>
+          Pflichtfeld. Bitte eine gültige E-Mail-Adresse, z. B.
+          name@beispiel.de.
+        </p>
+      </div>
+
+      <div>
+        <label for="cf-subject" class={label}>
+          Anliegen
+        </label>
+        <select
+          id="cf-subject"
+          name="subject"
+          required
+          aria-describedby="cf-subject-hint"
+          class={field}
+        >
+          <option value="">Bitte auswählen</option>
+          <option value="Allgemeine Frage">Allgemeine Frage</option>
+          <option value="Terminanfrage">Terminanfrage</option>
+          <option value="Sonstiges">Sonstiges</option>
+        </select>
+        <p id="cf-subject-hint" class={hint}>
+          Pflichtfeld. Bitte wähle ein Anliegen aus.
+        </p>
+      </div>
+
+      <div>
+        <label for="cf-message" class={label}>
+          Nachricht
+        </label>
+        <textarea
+          id="cf-message"
+          name="message"
+          rows="6"
+          required
+          minlength="10"
+          aria-describedby="cf-message-hint"
+          class={field}
+        />
+        <p id="cf-message-hint" class={hint}>
+          Pflichtfeld, mindestens 10 Zeichen.
+        </p>
+      </div>
+
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label for="cf-website">Bitte leer lassen</label>
+        <input
+          id="cf-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <div>
+        <div class="flex items-start gap-3">
+          <input
+            id="cf-privacy"
+            name="privacy"
+            type="checkbox"
+            value="akzeptiert"
+            required
+            aria-describedby="cf-privacy-hint"
+            class="mt-1 size-5 shrink-0 accent-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
+          />
+          <label for="cf-privacy">
+            Ich habe die
+            <a
+              href="/datenschutz"
+              class="font-semibold text-sage-700 underline"
+            >
+              Datenschutzerklärung
+            </a>
+            gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung
+            meiner Anfrage verwendet werden.
+          </label>
+        </div>
+        <p id="cf-privacy-hint" class={hint}>
+          Pflichtfeld: Ohne dein Einverständnis kann ich die Nachricht nicht
+          verarbeiten.
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sage-600 px-6 py-4 text-lg font-bold text-white shadow-lg transition hover:bg-sage-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600 active:scale-[0.98] sm:w-auto"
+      >
+        Nachricht senden
+        <Icon name="arrow-forward-rounded" class="size-5" />
+      </button>
+
+      <div
+        id="cf-status"
+        role="status"
+        aria-live="polite"
+        class="font-semibold"
+      />
+    </form>
+  ) : (
+    <div class="mt-4 rounded-xl bg-sage-50 p-4">
+      <p>
+        Das Kontaktformular ist gerade noch nicht freigeschaltet. Schreib mir
+        bis dahin gern direkt eine E-Mail.
+      </p>
+      {emailOk ? (
+        <p class="mt-3">
+          <a
+            href={`mailto:${contact.email}`}
+            class="font-semibold text-sage-700 underline break-words"
+          >
+            {contact.email}
+          </a>
+        </p>
+      ) : (
+        <p class="mt-3 text-sm text-muted">E-Mail-Adresse wird ergänzt.</p>
+      )}
+      <p class={hint}>
+        Bitte schick mir per E-Mail noch keine ausführlichen Gesundheitsdaten –
+        darüber sprechen wir im Termin.
+      </p>
+    </div>
+  )}
+</section>
+
+{endpointOk && <script>
+  const form = document.querySelector<HTMLFormElement>("#contact-form");
+  const status = document.querySelector<HTMLElement>("#cf-status");
+  if (form && status) {
+    form.addEventListener("submit", async (event) => {
+      if (!form.checkValidity()) return; // Browser zeigt die Validierung
+      event.preventDefault();
+      const button = form.querySelector<HTMLButtonElement>(
+        "button[type=submit]",
+      );
+      if (button) button.disabled = true;
+      status.className = "font-semibold text-ink";
+      status.textContent = "Wird gesendet …";
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error(String(response.status));
+        form.reset();
+        status.className = "font-semibold text-sage-700";
+        status.textContent =
+          "Danke für deine Nachricht! Ich melde mich so bald wie möglich bei dir.";
+      } catch {
+        status.className = "font-semibold text-red-700";
+        status.textContent =
+          "Das Senden hat leider nicht geklappt. Bitte versuch es später noch einmal oder schreib mir eine E-Mail.";
+      } finally {
+        if (button) button.disabled = false;
+      }
+    });
+  }
+</script>}
