@@ -17,8 +17,7 @@ const { eyebrow, title, highlight, lead } = Astro.props;
     </p>
   )}
   <h1 class="max-w-3xl text-3xl leading-tight font-extrabold md:text-5xl">
-    {title}
-    {highlight && <span class="text-sage-700">{highlight}</span>}
+    {title} {highlight && <span class="text-sage-700">{highlight}</span>}
   </h1>
   {lead && <p class="mt-4 max-w-2xl text-lg text-muted">{lead}</p>}
   <slot />

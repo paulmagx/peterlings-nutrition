@@ -1,0 +1,207 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Photo from "../../components/Photo.astro";
+import Icon from "../../components/Icon.astro";
+import { site, contact } from "../../data/site";
+import { getPosts, dateFormat } from "../../lib/wissen";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const isRecipe = data.category === "Rezept";
+const url = new URL(`/wissen/${post.id}`, Astro.site).href;
+const imageUrl = data.image
+  ? new URL(data.image.src, Astro.site).href
+  : undefined;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": isRecipe ? "Recipe" : "Article",
+  ...(isRecipe ? { name: data.title } : { headline: data.title }),
+  description: data.description,
+  datePublished: data.pubDate.toISOString(),
+  ...(data.updatedDate && { dateModified: data.updatedDate.toISOString() }),
+  author: { "@type": "Person", name: contact.owner },
+  publisher: { "@type": "Organization", name: site.name },
+  mainEntityOfPage: url,
+  ...(imageUrl && { image: imageUrl }),
+  ...(isRecipe && {
+    ...(data.ingredients?.length && { recipeIngredient: data.ingredients }),
+    ...(data.portions && { recipeYield: data.portions }),
+  }),
+};
+
+const hasRecipeInfo =
+  isRecipe && (data.portions || data.prepTime || data.ingredients?.length);
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  type="article"
+  noindex={data.draft}
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <article class="mx-auto max-w-3xl px-4 pt-10 pb-16 sm:px-6 md:pt-16">
+    <a
+      href="/wissen"
+      class="inline-flex items-center gap-1 text-sm font-semibold text-sage-700 hover:underline"
+    >
+      <Icon name="arrow-back-rounded" class="size-5" />
+      Zurück zur Übersicht
+    </a>
+
+    <header class="mt-6">
+      <p class="flex flex-wrap items-center gap-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
+        {data.category}
+        {data.draft && (
+          <span class="rounded-full bg-amber-100 px-2 py-0.5 tracking-normal text-amber-900 normal-case">
+            Entwurf, nur im Dev-Server sichtbar
+          </span>
+        )}
+      </p>
+      <h1 class="mt-3 text-3xl leading-tight font-extrabold md:text-5xl">
+        {data.title}
+      </h1>
+      <p class="mt-4 text-lg text-muted">{data.description}</p>
+      <p class="mt-4 text-sm text-muted">
+        <time datetime={data.pubDate.toISOString()}>
+          {dateFormat.format(data.pubDate)}
+        </time>
+        {data.updatedDate && (
+          <>
+            {" "}
+            · aktualisiert am{" "}
+            <time datetime={data.updatedDate.toISOString()}>
+              {dateFormat.format(data.updatedDate)}
+            </time>
+          </>
+        )}
+      </p>
+    </header>
+
+    {data.image && (
+      <Photo
+        image={data.image}
+        alt={data.imageAlt ?? ""}
+        class="mt-8"
+        sizes="(min-width: 768px) 768px, 100vw"
+        eager
+      />
+    )}
+
+    {hasRecipeInfo && (
+      <section
+        aria-label="Eckdaten und Zutaten"
+        class="mt-8 rounded-2xl bg-sage-50 p-6"
+      >
+        {(data.portions || data.prepTime) && (
+          <dl class="mb-5 flex flex-wrap gap-x-8 gap-y-2 text-sm">
+            {data.portions && (
+              <div>
+                <dt class="font-bold text-sage-800">Portionen</dt>
+                <dd>{data.portions}</dd>
+              </div>
+            )}
+            {data.prepTime && (
+              <div>
+                <dt class="font-bold text-sage-800">Zubereitung</dt>
+                <dd>{data.prepTime}</dd>
+              </div>
+            )}
+          </dl>
+        )}
+        {data.ingredients && data.ingredients.length > 0 && (
+          <>
+            <h2 class="text-xl font-bold">Zutaten</h2>
+            <ul class="mt-3 space-y-2">
+              {data.ingredients.map((item) => (
+                <li class="flex items-start gap-3">
+                  <Icon
+                    name="check-circle-outline-rounded"
+                    class="mt-0.5 size-5 shrink-0 text-sage-600"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </section>
+    )}
+
+    <div class="prose-wissen mt-8">
+      <Content />
+    </div>
+
+    <p class="mt-12 rounded-2xl bg-sage-50 p-5 text-sm text-muted">
+      Dieser Beitrag ersetzt keine ärztliche Beratung. Bei Beschwerden oder
+      Erkrankungen sprich bitte vorher mit deiner Ärztin oder deinem Arzt.
+    </p>
+
+    <a
+      href="/wissen"
+      class="mt-8 inline-flex items-center gap-1 text-sm font-semibold text-sage-700 hover:underline"
+    >
+      <Icon name="arrow-back-rounded" class="size-5" />
+      Zurück zur Übersicht
+    </a>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .prose-wissen {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+  .prose-wissen > * + * {
+    margin-top: 1.25rem;
+  }
+  .prose-wissen h2 {
+    margin-top: 2.5rem;
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 800;
+  }
+  .prose-wissen h3 {
+    margin-top: 2rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  .prose-wissen ul,
+  .prose-wissen ol {
+    padding-left: 1.5rem;
+  }
+  .prose-wissen ul {
+    list-style: disc;
+  }
+  .prose-wissen ol {
+    list-style: decimal;
+  }
+  .prose-wissen li + li {
+    margin-top: 0.5rem;
+  }
+  .prose-wissen li::marker {
+    color: var(--color-sage-600);
+  }
+  .prose-wissen a {
+    color: var(--color-sage-700);
+    text-decoration: underline;
+  }
+  .prose-wissen blockquote {
+    border-left: 4px solid var(--color-sage-300);
+    padding-left: 1rem;
+    color: var(--color-muted);
+  }
+</style>

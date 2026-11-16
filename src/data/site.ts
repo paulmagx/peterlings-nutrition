@@ -15,8 +15,9 @@ export const mainNav: NavItem[] = [
   {
     label: "Leistungen",
     href: "/leistungen",
-    icon: "menu-book-outline-rounded",
+    icon: "handshake-outline-rounded",
   },
+  { label: "Wissen", href: "/wissen", icon: "menu-book-outline-rounded" },
   { label: "Über mich", href: "/ueber-mich", icon: "person-outline-rounded" },
   { label: "Kontakt", href: "/kontakt", icon: "mail-outline-rounded" },
 ];
