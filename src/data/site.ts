@@ -21,6 +21,17 @@ export const mainNav: NavItem[] = [
   { label: "Kontakt", href: "/kontakt", icon: "mail-outline-rounded" },
 ];
 
+export type SocialLink = { label: string; href: string; icon: string };
+
+/**
+ * Social-Media-Profile für den Footer. Leer = keine Icon-Leiste.
+ * TODO(Lea): Nur echte Profile eintragen. Material Symbols hat keine Marken-Logos,
+ * deshalb neutrale Icons nutzen (z. B. "photo-camera-outline-rounded" oder "link-rounded").
+ * Beispiel:
+ * { label: "Instagram", href: "https://www.instagram.com/DEIN_PROFIL", icon: "photo-camera-outline-rounded" },
+ */
+export const socialLinks: SocialLink[] = [];
+
 export const bookingLink: NavItem = {
   label: "Termin buchen",
   href: "/termin",

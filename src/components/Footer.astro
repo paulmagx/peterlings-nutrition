@@ -1,6 +1,7 @@
 ---
+import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
-import { site, mainNav, legalNav } from "../data/site";
+import { site, mainNav, legalNav, socialLinks } from "../data/site";
 
 const year = new Date().getFullYear();
 ---
@@ -10,6 +11,23 @@ const year = new Date().getFullYear();
     <div class="space-y-3">
       <Logo />
       <p class="max-w-xs text-sm text-muted">{site.tagline}</p>
+      {socialLinks.length > 0 && (
+        <ul class="flex gap-2 pt-2">
+          {socialLinks.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener"
+                aria-label={`${item.label} (öffnet in neuem Tab)`}
+                class="flex size-10 items-center justify-center rounded-full text-sage-700 hover:bg-sage-100"
+              >
+                <Icon name={item.icon} class="size-5" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
 
     <nav aria-label="Seiten">
