@@ -53,8 +53,9 @@ const widths = [320, 480, 640, 800, 1200, 1600];
       aspectClass,
       className,
     ]}
-    role="img"
-    aria-label={`Platzhalter: ${alt}`}
+    role={alt ? "img" : undefined}
+    aria-label={alt ? `Platzhalter: ${alt}` : undefined}
+    aria-hidden={alt ? undefined : "true"}
   >
     <Icon name="photo-camera-outline-rounded" class="size-16" />
     <p class="text-sm font-semibold">Foto folgt</p>

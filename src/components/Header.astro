@@ -17,7 +17,7 @@ const path = Astro.url.pathname;
             <a
               href={item.href}
               aria-current={isActive(path, item.href) ? "page" : undefined}
-              class="rounded-full px-4 py-2 text-sm font-semibold text-muted transition-colors hover:bg-sage-100 hover:text-sage-800 aria-[current=page]:bg-sage-100 aria-[current=page]:text-sage-800"
+              class="rounded-full px-4 py-2 text-sm font-semibold text-muted transition-colors hover:bg-sage-100 hover:text-sage-800 decoration-2 underline-offset-4 aria-[current=page]:bg-sage-100 aria-[current=page]:text-sage-800 aria-[current=page]:underline"
             >
               {item.label}
             </a>
@@ -28,6 +28,7 @@ const path = Astro.url.pathname;
 
     <a
       href={bookingLink.href}
+      aria-current={isActive(path, bookingLink.href) ? "page" : undefined}
       class="rounded-full bg-sage-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sage-700 active:scale-95"
     >
       {bookingLink.label}

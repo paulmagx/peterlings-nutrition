@@ -3,8 +3,10 @@ import Icon from "./Icon.astro";
 import Logo from "./Logo.astro";
 import NewsletterSignup from "./NewsletterSignup.astro";
 import { site, mainNav, legalNav, socialLinks } from "../data/site";
+import { isActive } from "../lib/nav";
 
 const year = new Date().getFullYear();
+const path = Astro.url.pathname;
 ---
 
 <footer class="mt-16 border-t border-sage-200/60 bg-sage-50">
@@ -37,10 +39,14 @@ const year = new Date().getFullYear();
       <h2 class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
         Seiten
       </h2>
-      <ul class="space-y-2 text-sm">
+      <ul class="space-y-1 text-sm">
         {mainNav.map((item) => (
           <li>
-            <a href={item.href} class="text-muted hover:text-sage-700">
+            <a
+              href={item.href}
+              aria-current={isActive(path, item.href) ? "page" : undefined}
+              class="inline-block py-0.5 text-muted hover:text-sage-700 aria-[current=page]:font-semibold aria-[current=page]:text-sage-700"
+            >
               {item.label}
             </a>
           </li>
@@ -52,10 +58,14 @@ const year = new Date().getFullYear();
       <h2 class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
         Rechtliches
       </h2>
-      <ul class="space-y-2 text-sm">
+      <ul class="space-y-1 text-sm">
         {legalNav.map((item) => (
           <li>
-            <a href={item.href} class="text-muted hover:text-sage-700">
+            <a
+              href={item.href}
+              aria-current={isActive(path, item.href) ? "page" : undefined}
+              class="inline-block py-0.5 text-muted hover:text-sage-700 aria-[current=page]:font-semibold aria-[current=page]:text-sage-700"
+            >
               {item.label}
             </a>
           </li>
@@ -63,7 +73,7 @@ const year = new Date().getFullYear();
       </ul>
     </nav>
 
-    <p class="text-xs text-slate-500 md:col-span-3">
+    <p class="text-xs text-muted md:col-span-3">
       © {year} {site.name}
     </p>
   </div>

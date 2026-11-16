@@ -8,7 +8,14 @@ import Icon from "./Icon.astro";
 import { newsletter } from "../data/newsletter";
 import { isPlaceholder } from "../lib/placeholder";
 
-const show = newsletter.enabled && !isPlaceholder(newsletter.formAction);
+// Nur für `npm run check:a11y`: im Dev-Server testweise anzeigen (A11Y_FORMS_PREVIEW=1).
+const a11yPreview =
+  import.meta.env.DEV && process.env.A11Y_FORMS_PREVIEW === "1";
+const show =
+  a11yPreview || (newsletter.enabled && !isPlaceholder(newsletter.formAction));
+const formAction = isPlaceholder(newsletter.formAction)
+  ? "/"
+  : newsletter.formAction;
 ---
 
 {show && (
@@ -24,7 +31,7 @@ const show = newsletter.enabled && !isPlaceholder(newsletter.formAction);
       </p>
 
       <form
-        action={newsletter.formAction}
+        action={formAction}
         method="post"
         class="relative mt-4 grid max-w-xl gap-4"
       >
@@ -38,7 +45,7 @@ const show = newsletter.enabled && !isPlaceholder(newsletter.formAction);
             type="email"
             required
             autocomplete="email"
-            class="mt-1 block w-full rounded-xl border border-sage-300 bg-white px-4 py-3 text-ink focus-visible:border-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
+            class="mt-1 block w-full rounded-xl border border-sage-600 bg-white px-4 py-3 text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
           />
         </div>
 
@@ -63,7 +70,7 @@ const show = newsletter.enabled && !isPlaceholder(newsletter.formAction);
             type="checkbox"
             value="ja"
             required
-            class="mt-1 size-5 shrink-0 accent-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
+            class="size-6 shrink-0 accent-sage-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-600"
           />
           {/* TODO(Lea): Versandhäufigkeit („ca. einmal im Monat“) bestätigen, bevor der Newsletter eingeschaltet wird. */}
           <label for="nl-consent">

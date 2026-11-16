@@ -43,8 +43,11 @@ const steps = [
 
   <section
     class="mx-auto max-w-6xl px-4 pb-12 sm:px-6"
-    aria-label="Meine Leistungen"
+    aria-labelledby="leistungen-heading"
   >
+    <h2 id="leistungen-heading" class="sr-only">
+      Meine Leistungen
+    </h2>
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
         <ServiceCard

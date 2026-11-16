@@ -88,7 +88,7 @@ if (!base) {
       String(port),
       "--host",
       "localhost",
-      ...(devMode ? [] : ["--ignore-lock"]),
+      "--ignore-lock", // im Vordergrund laufen, sonst bleibt ein Hintergrund-Server übrig
     ],
     {
       cwd: root,

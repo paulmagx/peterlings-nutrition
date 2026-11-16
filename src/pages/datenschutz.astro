@@ -205,7 +205,7 @@ const sections: Section[] = [
         p: `Auf der Seite „Termin buchen“ kannst du den Buchungskalender von ${booking.providerName} direkt laden. Der Kalender wird erst angezeigt, wenn du auf „Kalender laden“ klickst. Erst dann wird eine Verbindung zu den Servern von ${booking.providerName} aufgebaut und deine IP-Adresse und technische Browserdaten werden übermittelt. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Du kannst sie jederzeit mit Wirkung für die Zukunft widerrufen, indem du die Seite neu lädst; der Kalender wird dann erst nach einem erneuten Klick wieder geladen. Alternativ kannst du die Buchungsseite direkt in einem neuen Tab öffnen.`,
       },
       {
-        p: `Weitere Informationen findest du in der <a href="${booking.privacyUrl}" class="${linkClass}" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von ${booking.providerName}</a>.`,
+        p: `Weitere Informationen findest du in der <a href="${booking.privacyUrl}" class="${linkClass}" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von ${booking.providerName}<span class="sr-only"> (öffnet in neuem Tab)</span></a>.`,
       },
       {
         todo: "TODO(Lea): Speicherdauer der Buchungsdaten festlegen (Löschfristen im Buchungstool) und hier ergänzen; ggf. Videodienst und Online-Zahlung (Stripe) ergänzen, falls genutzt.",
