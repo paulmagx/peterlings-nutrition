@@ -6,6 +6,7 @@ Website der Ernährungsberaterin Lea Petruschka. Astro 7 + Tailwind 4, rein stat
 
 - Alle sichtbaren Texte auf Deutsch, Ansprache **„du“** (nie „Sie“).
 - Warm, klar, alltagstauglich. Keine Heilversprechen („heilt“, „löst deine Darmprobleme“) – Heilmittelwerbegesetz. Stattdessen „unterstützen“, „begleiten“, „kann helfen“.
+- Verbindlicher Formulierungsleitfaden: `docs/textpruefung.md` (Abschnitt „Formulierungsleitfaden“). Insbesondere: „Ernährungsberaterin“ statt „Therapeutin“, keine Diagnostik-Begriffe („Anamnese“, „Analyse“), keine unbelegten Siegel („zertifiziert“, „medizinisch“), keine Bewertungssterne.
 - **Nichts erfinden**, was als Tatsache gelesen würde: keine Kundenstimmen, Qualifikationen, Adressen, Preise, Zahlen. Fehlt etwas, Platzhalter mit `TODO(Lea): …` setzen (im Code-Kommentar oder sichtbar in der Seite), damit es vor dem Livegang auffällt.
 
 ## Technik
