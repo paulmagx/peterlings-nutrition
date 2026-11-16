@@ -10,9 +10,11 @@ interface Props {
   /** Seitentitel ohne Markenname, z. B. "Leistungen". Leer lassen für die Startseite. */
   title?: string;
   description?: string;
+  /** Seite nicht in Suchmaschinen aufnehmen (z. B. 404). */
+  noindex?: boolean;
 }
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, noindex = false } = Astro.props;
 const fullTitle = title
   ? `${title} | ${site.name}`
   : `${site.name} – ${site.tagline}`;
@@ -26,6 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#557a56" />
     <meta property="og:type" content="website" />
