@@ -46,7 +46,8 @@ export const booking: BookingConfig = {
   provider: "zeeg",
   providerName: "Zeeg",
   providerLegal: "Zeeg GmbH, Friedrichstr. 155, 10117 Berlin",
-  // Laut Zeeg: Telekom-Rechenzentrum in Deutschland (Hilfe-Center nennt zusätzlich die Niederlande) – mit dem AVV abgleichen.
+  // TODO(Lea): Serverstandort mit dem AVV abgleichen. Laut Zeeg: Telekom-Rechenzentrum in Deutschland (Hilfe-Center nennt zusätzlich die Niederlande).
+  // Der Wert erscheint im Zwei-Klick-Hinweis auf /termin und in der Datenschutzerklärung.
   serverLocation: "Deutschland",
   bookingUrl:
     "TODO(Lea): Link zu deiner Zeeg-Profilseite, z. B. https://zeeg.me/peterlings-nutrition",

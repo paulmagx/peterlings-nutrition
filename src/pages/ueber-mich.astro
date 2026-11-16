@@ -9,8 +9,9 @@ import { getImage } from "../data/images";
 const values = [
   {
     icon: "biotech-outline",
-    title: "Wissenschaftlich",
-    text: "Was ich dir empfehle, stützt sich auf aktuelle Erkenntnisse der Ernährungswissenschaft. Ich übersetze sie so, dass du sie im Alltag wirklich nutzen kannst.",
+    title: "Fundiert",
+    // TODO(Lea): Falls zutreffend, konkret nennen, z. B. „orientiert an den Empfehlungen der DGE“.
+    text: "Ich orientiere mich an anerkannten Empfehlungen der Ernährungswissenschaft und übersetze sie so, dass du sie im Alltag wirklich nutzen kannst.",
   },
   {
     icon: "spa-outline",
@@ -39,7 +40,7 @@ const principles = [
   },
   {
     title: "Ehrlich und auf Augenhöhe",
-    text: "Ich begleite dich und unterstütze dich bei deinen Entscheidungen. Eine ärztliche Behandlung ersetze ich nicht.",
+    text: "Ich begleite dich und unterstütze dich bei deinen Entscheidungen. Meine Beratung ersetzt keine ärztliche Behandlung.",
   },
 ];
 
@@ -80,9 +81,9 @@ const credentials = [
           Ernährung keine Einschränkung, sondern Lebensqualität.
         </p>
         <p class="leading-relaxed text-muted">
-          Meine Mission: komplexe wissenschaftliche Erkenntnisse in
-          alltagstaugliche und genussvolle Gewohnheiten zu übersetzen, damit du
-          dich in deinem Körper wohler fühlst.
+          Mein Ziel: Ernährungswissen so zu übersetzen, dass daraus
+          alltagstaugliche und genussvolle Gewohnheiten werden, die zu dir
+          passen.
         </p>
       </div>
     </div>
@@ -123,9 +124,7 @@ const credentials = [
 
   <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
     <h2 class="mb-2 text-2xl font-bold">Qualifikationen &amp; Werdegang</h2>
-    <p class="mb-6 text-sm text-muted">
-      Dieser Bereich wird vor dem Livegang von Lea ergänzt.
-    </p>
+    <p class="mb-6 text-sm text-muted">Diesen Bereich ergänze ich in Kürze.</p>
     <ul class="grid gap-3 sm:grid-cols-2">
       {credentials.map((c) => (
         <li class="flex items-start gap-3 rounded-xl border border-dashed border-sage-300 p-4 text-sm text-muted">
@@ -141,13 +140,13 @@ const credentials = [
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
     <div class="rounded-3xl bg-sage-50 p-8 text-center md:p-12">
-      <h2 class="text-2xl font-bold md:text-3xl">Lass uns kennenlernen</h2>
+      <h2 class="text-2xl font-bold md:text-3xl">Lernen wir uns kennen</h2>
       <p class="mx-auto mt-3 max-w-xl text-muted">
-        Im Erstgespräch schauen wir gemeinsam, was du dir wünschst und wie ich
+        Im ersten Termin schauen wir gemeinsam, was du dir wünschst und wie ich
         dich unterstützen kann.
       </p>
       <Button href="/termin" icon="arrow-forward-rounded" class="mt-6">
-        Termin vereinbaren
+        Termin buchen
       </Button>
     </div>
   </section>

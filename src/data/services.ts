@@ -22,15 +22,15 @@ export const services: Service[] = [
   {
     id: "einzelberatung",
     category: "Einstieg",
-    title: "Einzelberatung (60 Min)",
-    // TODO(Lea): Preis bestätigen
+    title: "Einzelberatung (60 Min.)",
+    // TODO(Lea): Preis und Dauer (60 Min.) bestätigen; Preise als Endpreise (ggf. inkl. USt)
     price: 89,
     priceNote: "einmalig",
     summary:
-      "Gemeinsam schauen wir auf deine Essgewohnheiten, deine Ziele und deine gesundheitlichen Voraussetzungen und finden deinen Weg.",
+      "Gemeinsam schauen wir auf deine Essgewohnheiten, deinen Alltag und deine Ziele und finden einen Weg, der zu dir passt.",
     features: [
-      "Anamnese und Status quo",
-      "Zieldefinition",
+      "Kennenlernen und Ist-Stand",
+      "Ziele gemeinsam festlegen",
       "Konkrete Handlungsempfehlungen",
     ],
     highlighted: false,

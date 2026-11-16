@@ -23,13 +23,13 @@ export const faqs: FaqItem[] = [
   {
     question: "Findet die Beratung vor Ort oder online statt?",
     answer:
-      "Das hängt vom Angebot ab. Welche Möglichkeiten es gibt, siehst du bei den einzelnen Leistungen. Wenn du dir unsicher bist, schreib mir einfach kurz.",
+      "Das hängt vom Angebot ab. Schreib mir einfach kurz, dann sage ich dir, welche Möglichkeiten es für dein Anliegen gibt.",
     todo: "TODO(Lea): Pro Leistung klären: vor Ort, online oder beides? Wo ist der Praxisort?",
   },
   {
     question: "Wie lange dauert ein Termin?",
     answer:
-      "Die Dauer steht bei der jeweiligen Leistung. Lass dir für das Gespräch in Ruhe Zeit, wir hetzen nicht.",
+      "Das hängt von der Leistung ab. Plane dir für das Gespräch genug Zeit ein, damit wir in Ruhe sprechen können.",
     todo: "TODO(Lea): Dauer je Leistung bestätigen.",
   },
   {
@@ -47,7 +47,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Gibt meine Krankenkasse einen Zuschuss?",
     answer:
-      "Das kann sein, ist aber nicht selbstverständlich. Manche gesetzlichen Krankenkassen beteiligen sich an Angeboten zur Ernährungsberatung. Ob und in welcher Höhe, entscheidet jede Kasse selbst. Es hängt zum Beispiel davon ab, ob es um Vorbeugung (§ 20 SGB V) oder um eine ergänzende Leistung bei einer Erkrankung (§ 43 SGB V, dafür ist meist eine ärztliche Bescheinigung nötig) geht und welche Qualifikation die Beraterin nachweisen kann. Frag am besten vorher bei deiner Krankenkasse nach, welche Bedingungen dort gelten.",
+      "Das kann sein, ist aber nicht selbstverständlich. Manche gesetzlichen Krankenkassen beteiligen sich an Angeboten zur Ernährungsberatung. Ob und in welcher Höhe, entscheidet jede Kasse selbst. Es hängt zum Beispiel davon ab, ob es um Vorbeugung (§ 20 SGB V) oder um eine ergänzende Leistung bei einer Erkrankung (§ 43 SGB V, dafür ist meist eine ärztliche Bescheinigung nötig) geht und welche Qualifikation nachgewiesen werden kann. Frag am besten vorher bei deiner Krankenkasse nach, welche Bedingungen dort gelten.",
     todo: "TODO(Lea): Klären, ob ein Kassenzuschuss bei dir möglich ist (Qualifikation, ZPP-Zertifizierung) und wie die Rechnung aussehen muss. Erst dann konkreter formulieren.",
   },
   {
