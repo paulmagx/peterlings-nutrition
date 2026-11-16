@@ -4,7 +4,9 @@ import PageIntro from "../components/PageIntro.astro";
 import ServiceCard from "../components/ServiceCard.astro";
 import Button from "../components/Button.astro";
 import Icon from "../components/Icon.astro";
+import Faq from "../components/Faq.astro";
 import { services } from "../data/services";
+import { faqs } from "../data/faq";
 
 // Generische Schritte, keine festen Zusagen zu Dauer oder Ablauf.
 // TODO(Lea): Ablauf der Beratung prüfen und anpassen
@@ -67,6 +69,18 @@ const steps = [
         </li>
       ))}
     </ol>
+  </section>
+
+  <section
+    class="mx-auto max-w-3xl px-4 py-12 sm:px-6"
+    aria-labelledby="faq-title"
+  >
+    <h2 id="faq-title" class="text-2xl font-extrabold md:text-3xl">
+      Häufige Fragen
+    </h2>
+    <div class="mt-8">
+      <Faq items={faqs} />
+    </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pt-4 pb-16 sm:px-6">
