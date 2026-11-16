@@ -16,6 +16,10 @@ interface Props {
   buttonLabel?: string;
   /** Tailwind-Klassen für das Seitenverhältnis (verhindert Layoutsprünge). */
   class?: string;
+  /** Feste Mindesthöhe in Pixeln (z. B. für Kalender). Ersetzt dann das Seitenverhältnis über `class`. */
+  minHeight?: number;
+  /** Serverstandort des Anbieters; wird im Hinweistext genannt, falls angegeben. */
+  serverLocation?: string;
 }
 const {
   provider,
@@ -23,24 +27,34 @@ const {
   title,
   privacyUrl,
   buttonLabel = "Karte laden",
-  class: className = "aspect-[4/3] md:aspect-[16/10]",
+  class: className,
+  minHeight,
+  serverLocation,
 } = Astro.props;
+const sizeClass =
+  className ?? (minHeight ? "" : "aspect-[4/3] md:aspect-[16/10]");
+const sizeStyle = minHeight ? `min-height: ${minHeight}px` : undefined;
 ---
 
 <div
   class:list={[
     "consent-embed relative overflow-hidden rounded-2xl border border-sage-200 bg-sage-50",
-    className,
+    sizeClass,
   ]}
+  style={sizeStyle}
   data-src={src}
   data-title={title}
 >
-  <div class="consent-embed__prompt flex h-full flex-col items-start justify-center gap-4 p-6">
+  <div
+    class="consent-embed__prompt flex h-full flex-col items-start justify-center gap-4 p-6"
+    style={sizeStyle}
+  >
     <p class="font-bold">{title}</p>
     <p class="max-w-prose text-sm text-muted">
-      Wenn du den Inhalt lädst, wird eine Verbindung zu {provider} aufgebaut und
-      dabei werden Daten (z. B. deine IP-Adresse) an den Anbieter übertragen.
-      Mehr dazu in der{" "}
+      Wenn du den Inhalt lädst, wird eine Verbindung zu {provider}
+      {serverLocation && ` (Server in ${serverLocation})`} aufgebaut und dabei
+      werden Daten (z. B. deine IP-Adresse) an den Anbieter übertragen. Mehr
+      dazu in der{" "}
       <a
         href={privacyUrl}
         class="font-semibold text-sage-700 underline"

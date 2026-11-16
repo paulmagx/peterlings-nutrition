@@ -17,6 +17,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageIntro from "../components/PageIntro.astro";
 import Icon from "../components/Icon.astro";
 import { contact } from "../data/site";
+import { booking } from "../data/booking";
 
 type Block =
   { p: string } | { list: string[] } | { h3: string } | { todo: string };
@@ -177,19 +178,31 @@ const sections: Section[] = [
   },
 
   // ── Terminbuchung ────────────────────────────────────────────────────────
-  // Anbieter wird in Issue #25 festgelegt. Text danach mit dem Generator abgleichen.
+  // Angaben kommen aus src/data/booking.ts. Text mit dem Generator abgleichen.
   {
     id: "terminbuchung",
     title: "Online-Terminbuchung",
     blocks: [
       {
-        p: "Für die Buchung von Terminen nutze ich ein externes Buchungstool. Wenn du darüber einen Termin vereinbarst, werden die dort eingegebenen Daten (z. B. Name, E-Mail-Adresse, Telefonnummer, gewünschter Termin) vom Anbieter des Tools in meinem Auftrag verarbeitet.",
+        p: `Für die Online-Terminbuchung nutze ich den Dienst ${booking.providerName} (${booking.providerLegal}). Wenn du einen Termin buchst, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, ggf. Telefonnummer), der gewählte Termin und die gewählte Leistung sowie technische Daten (z. B. IP-Adresse, Zeitpunkt der Buchung) an ${booking.providerName} übermittelt und dort gespeichert. ${booking.providerName} verarbeitet die Daten nach eigenen Angaben auf Servern in ${booking.serverLocation}.`,
       },
       {
-        p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Durchführung vorvertraglicher Maßnahmen bzw. Vertragserfüllung). Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.",
+        p: "Zweck der Verarbeitung ist die Vereinbarung und Durchführung des Termins. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertrag bzw. vorvertragliche Maßnahmen). Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.",
       },
       {
-        todo: "TODO(Lea): Buchungstool eintragen (Issue #25): Name und Anschrift des Anbieters, Serverstandort, ggf. Drittlandübermittlung, Einbindung (Link oder Zwei-Klick-Einbettung), Speicherdauer und Link zur Datenschutzerklärung des Anbieters. Prüfen, ob dort Gesundheitsangaben abgefragt werden (dann Einwilligung nach Art. 9 DSGVO einholen).",
+        todo: "TODO(Lea): Abschluss des Vertrags zur Auftragsverarbeitung (AVV) mit dem Anbieter bestätigen und den Serverstandort mit dem AVV abgleichen (Zeeg nennt in der Hilfe zusätzlich die Niederlande).",
+      },
+      {
+        p: "Bitte gib im Buchungsformular keine Angaben zu deiner Gesundheit an. Darüber sprechen wir im Termin.",
+      },
+      {
+        p: `Auf der Seite „Termin buchen“ kannst du den Buchungskalender von ${booking.providerName} direkt laden. Der Kalender wird erst angezeigt, wenn du auf „Kalender laden“ klickst. Erst dann wird eine Verbindung zu den Servern von ${booking.providerName} aufgebaut und deine IP-Adresse und technische Browserdaten werden übermittelt. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Du kannst sie jederzeit widerrufen, indem du die Seite neu lädst. Alternativ kannst du die Buchungsseite direkt in einem neuen Tab öffnen.`,
+      },
+      {
+        p: `Weitere Informationen findest du in der <a href="${booking.privacyUrl}" class="${linkClass}" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von ${booking.providerName}</a>.`,
+      },
+      {
+        todo: "TODO(Lea): Speicherdauer der Buchungsdaten festlegen (Löschfristen im Buchungstool) und hier ergänzen; ggf. Videodienst und Online-Zahlung (Stripe) ergänzen, falls genutzt.",
       },
     ],
   },
