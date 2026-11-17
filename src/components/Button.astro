@@ -1,11 +1,20 @@
 ---
-/** Link im Button-Stil. Für echte Aktionen in Formularen ein <button> mit denselben Klassen verwenden. */
+/**
+ * Link im Button-Stil. Für echte Aktionen in Formularen ein <button> mit denselben Klassen verwenden.
+ *
+ * Varianten:
+ *  - primary:   gefüllte Pille (Hauptaktion)
+ *  - secondary: umrandete Pille
+ *  - link:      Textlink mit Pfeil „Mehr erfahren ›“
+ *  - light:     gefüllte helle Pille für dunkle Flächen
+ */
 import Icon from "./Icon.astro";
 
 interface Props {
   href: string;
-  variant?: "primary" | "secondary";
-  /** Material-Symbols-Name für ein Icon rechts vom Text. */
+  variant?: "primary" | "secondary" | "link" | "light";
+  size?: "md" | "lg";
+  /** Material-Symbols-Name für ein Icon rechts vom Text (nicht bei variant="link"). */
   icon?: string;
   class?: string;
   /** Öffnet den Link in einem neuen Tab (mit rel="noopener"). */
@@ -14,13 +23,29 @@ interface Props {
 const {
   href,
   variant = "primary",
+  size = "md",
   icon,
   class: className = "",
   newTab = false,
 } = Astro.props;
+
+const pill = [
+  "inline-flex items-center justify-center gap-1.5 rounded-full font-medium transition duration-200 ease-soft active:scale-[0.98]",
+  size === "lg"
+    ? "px-7 py-3.5 text-[1.0625rem]"
+    : "px-5 py-2.5 text-[0.9375rem]",
+];
 const styles = {
-  primary: "bg-sage-600 text-white shadow-lg hover:bg-sage-700",
-  secondary: "border border-sage-300 bg-white text-sage-800 hover:bg-sage-50",
+  primary: [...pill, "bg-sage-700 text-white hover:bg-sage-800"],
+  secondary: [
+    ...pill,
+    "text-sage-700 ring-1 ring-sage-700 ring-inset hover:bg-sage-700 hover:text-white",
+  ],
+  light: [...pill, "bg-white text-ink hover:bg-white/85"],
+  link: [
+    "group inline-flex items-center gap-0.5 font-medium text-sage-700 underline-offset-4 hover:underline",
+    size === "lg" ? "text-[1.0625rem]" : "text-[0.9375rem]",
+  ],
 };
 ---
 
@@ -28,13 +53,16 @@ const styles = {
   href={href}
   target={newTab ? "_blank" : undefined}
   rel={newTab ? "noopener" : undefined}
-  class:list={[
-    "inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-bold transition active:scale-[0.98]",
-    styles[variant],
-    className,
-  ]}
+  class:list={[styles[variant], className]}
 >
   <slot />
   {newTab && <span class="sr-only">(öffnet in neuem Tab)</span>}
-  {icon && <Icon name={icon} class="size-5" />}
+  {variant === "link" ? (
+    <Icon
+      name="chevron-right-rounded"
+      class="size-[1.15em] transition-transform group-hover:translate-x-0.5"
+    />
+  ) : (
+    icon && <Icon name={icon} class="size-[1.15em]" />
+  )}
 </a>

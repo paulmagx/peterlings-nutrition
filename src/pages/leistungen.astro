@@ -7,27 +7,10 @@ import Icon from "../components/Icon.astro";
 import Faq from "../components/Faq.astro";
 import { services } from "../data/services";
 import { faqs } from "../data/faq";
+import { processSteps } from "../data/process";
 import { booking, isBookingConfigured } from "../data/booking";
 
-// Generische Schritte, keine festen Zusagen zu Dauer oder Ablauf.
-// TODO(Lea): Ablauf der Beratung prüfen und anpassen
-const steps = [
-  {
-    icon: "mail-outline-rounded",
-    title: "Termin buchen",
-    text: "Du buchst einen Termin oder schreibst mir kurz, worum es dir geht.",
-  },
-  {
-    icon: "forum-outline-rounded",
-    title: "Beratung",
-    text: "Wir besprechen deine Situation und deine Ziele.",
-  },
-  {
-    icon: "checklist-rounded",
-    title: "Umsetzung",
-    text: "Du bekommst Empfehlungen, die zu deinem Alltag passen.",
-  },
-];
+const steps = processSteps;
 ---
 
 <BaseLayout

@@ -6,14 +6,16 @@
 import { icons } from "@iconify-json/material-symbols";
 import { getIconData, iconToSVG, replaceIDs } from "@iconify/utils";
 
-interface Props {
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends Omit<HTMLAttributes<"svg">, "class"> {
   name: string;
   class?: string;
   /** Wenn gesetzt, wird das Icon für Screenreader beschriftet, sonst ist es dekorativ. */
   label?: string;
 }
 
-const { name, class: className = "size-6", label } = Astro.props;
+const { name, class: className = "size-6", label, ...rest } = Astro.props;
 const data = getIconData(icons, name);
 if (!data) throw new Error(`Icon "${name}" gibt es in Material Symbols nicht.`);
 const { attributes, body } = iconToSVG(data);
@@ -28,5 +30,6 @@ const { attributes, body } = iconToSVG(data);
   aria-label={label}
   aria-hidden={label ? undefined : "true"}
   focusable="false"
+  {...rest}
   set:html={replaceIDs(body)}
 />

@@ -1,9 +1,8 @@
 ---
-import manropeLatin from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import MobileNav from "../components/MobileNav.astro";
 import StructuredData from "../components/StructuredData.astro";
 import Analytics from "../components/Analytics.astro";
 import { site } from "../data/site";
@@ -42,7 +41,7 @@ const isHome = Astro.url.pathname === "/";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="preload"
-      href={manropeLatin}
+      href={interLatin}
       as="font"
       type="font/woff2"
       crossorigin
@@ -51,7 +50,7 @@ const isHome = Astro.url.pathname === "/";
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#557a56" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -74,7 +73,7 @@ const isHome = Astro.url.pathname === "/";
   <body class="flex min-h-dvh flex-col">
     <a
       href="#inhalt"
-      class="sr-only rounded-full bg-sage-700 px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
+      class="sr-only rounded-full bg-ink px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60]"
     >
       Zum Inhalt springen
     </a>
@@ -83,6 +82,5 @@ const isHome = Astro.url.pathname === "/";
       <slot />
     </main>
     <Footer />
-    <MobileNav />
   </body>
 </html>

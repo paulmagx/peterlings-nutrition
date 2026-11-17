@@ -13,7 +13,7 @@ interface Props {
   alt: string;
   sizes?: string;
   class?: string;
-  aspect?: "portrait" | "landscape" | "square";
+  aspect?: "portrait" | "landscape" | "square" | "wide";
   /** Wichtiges Bild über dem Falz sofort laden (statt lazy). */
   eager?: boolean;
 }
@@ -31,6 +31,7 @@ const aspectClass = {
   portrait: "aspect-[4/5]",
   landscape: "aspect-[3/2]",
   square: "aspect-square",
+  wide: "aspect-[4/3] md:aspect-[16/7]",
 }[aspect];
 
 const widths = [320, 480, 640, 800, 1200, 1600];
@@ -46,12 +47,12 @@ const widths = [320, 480, 640, 800, 1200, 1600];
     loading={eager ? "eager" : "lazy"}
     fetchpriority={eager ? "high" : undefined}
     decoding={eager ? "sync" : "async"}
-    class:list={["w-full rounded-3xl object-cover", aspectClass, className]}
+    class:list={["w-full rounded-tile object-cover", aspectClass, className]}
   />
 ) : (
   <div
     class:list={[
-      "flex w-full flex-col items-center justify-center gap-3 rounded-3xl bg-sage-100 p-6 text-center text-sage-700",
+      "relative flex w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-tile bg-gradient-to-br from-sage-100 via-sage-50 to-canvas p-6 text-center text-sage-700",
       aspectClass,
       className,
     ]}
@@ -59,7 +60,16 @@ const widths = [320, 480, 640, 800, 1200, 1600];
     aria-label={alt ? `Platzhalter: ${alt}` : undefined}
     aria-hidden={alt ? undefined : "true"}
   >
-    <Icon name="photo-camera-outline-rounded" class="size-16" />
-    <p class="text-sm font-semibold">Foto folgt</p>
+    <Icon
+      name="eco-outline-rounded"
+      class="absolute -right-[8%] -bottom-[15%] size-[70%] max-h-[28rem] max-w-[28rem] text-sage-200/70"
+    />
+    <Icon
+      name="photo-camera-outline-rounded"
+      class="relative size-8 text-sage-600"
+    />
+    <p class="relative text-[0.8125rem] font-medium text-sage-800">
+      Foto folgt
+    </p>
   </div>
 )}

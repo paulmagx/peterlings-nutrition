@@ -1,16 +1,15 @@
 @import "tailwindcss";
 
 /*
- * Manrope selbst gehostet, nur die Teilmengen latin (deutscher Text) und latin-ext
- * (z. B. Sonderzeichen in Namen). Kyrillisch, Griechisch und Vietnamesisch entfallen.
- * Die latin-Datei wird in BaseLayout.astro vorgeladen.
+ * Inter selbst gehostet, nur die Teilmengen latin (deutscher Text) und latin-ext
+ * (z. B. Sonderzeichen in Namen). Die latin-Datei wird in BaseLayout.astro vorgeladen.
  */
 @font-face {
-  font-family: "Manrope Variable";
+  font-family: "Inter Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 200 800;
-  src: url("@fontsource-variable/manrope/files/manrope-latin-ext-wght-normal.woff2")
+  font-weight: 100 900;
+  src: url("@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
     U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
@@ -19,11 +18,11 @@
 }
 
 @font-face {
-  font-family: "Manrope Variable";
+  font-family: "Inter Variable";
   font-style: normal;
   font-display: swap;
-  font-weight: 200 800;
-  src: url("@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2")
+  font-weight: 100 900;
+  src: url("@fontsource-variable/inter/files/inter-latin-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -34,14 +33,19 @@
 /*
  * Design-Tokens – die einzige Stelle, an der Farben und Schrift festgelegt werden.
  *
- * Salbeigrün-Skala auf Basis des Prototyps (#8fae90 / #7ba37b).
+ * Stil: ruhig, hell, viel Weißraum. Neutrale Grautöne tragen die Seite,
+ * Salbeigrün ist nur Akzent (Links, Buttons, kleine Überzeilen).
+ *
  * Kontrast (WCAG AA, mind. 4.5:1 für normalen Text):
- *   - Weißer Text auf sage-600 (#557a56): 4.88:1 → Buttons
- *   - sage-700 (#466447) auf Weiß: > 6:1      → farbiger Text, Links
+ *   - ink (#1d1d1f) auf Weiß: 16.8:1
+ *   - muted (#6e6e73) auf Weiß: 5.0:1, auf canvas (#f5f5f7): 4.6:1
+ *   - sage-700 (#466447) auf Weiß: 6.4:1 → Links, Akzenttext
+ *   - Weiß auf sage-700: 6.4:1 → Buttons
+ *   - sage-300 (#afc7b0) auf ink: 10:1 → Akzent auf dunklen Flächen
  *   - sage-400/500 nur für Flächen und Icons, nie für Fließtext
  */
 @theme {
-  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 
   --color-sage-50: #f3f7f3;
   --color-sage-100: #e6eee6;
@@ -55,53 +59,56 @@
   --color-sage-900: #2a3b2b;
   --color-sage-950: #1a1f1a;
 
-  --color-surface: #fcfdfc;
-  --color-ink: #1e293b;
-  --color-muted: #475569;
+  /* Seitenhintergrund und Flächen */
+  --color-surface: #ffffff;
+  --color-canvas: #f5f5f7;
+  --color-line: #d2d2d7;
+
+  /* Text */
+  --color-ink: #1d1d1f;
+  --color-muted: #6e6e73;
+
+  /* Große, ruhige Radien für Kacheln */
+  --radius-tile: 1.75rem;
+
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Sticky-Header (oben) und Tab-Leiste (unten, nur Handy) dürfen fokussierte
-       Elemente und Sprungziele nicht verdecken (WCAG 2.4.11). */
-    scroll-padding-top: 5rem;
-    scroll-padding-bottom: 6rem;
-  }
-
-  @media (min-width: 48rem) {
-    html {
-      scroll-padding-bottom: 1rem;
-    }
-  }
-
-  /* Lange Wörter (z. B. „Ernährungsberatung“) bei schmalen Fenstern und 400 % Zoom
-     umbrechen statt waagerecht überlaufen zu lassen (WCAG 1.4.10). */
-  h1,
-  h2,
-  h3 {
-    hyphens: auto;
-    overflow-wrap: break-word;
+    /* Sticky-Header darf fokussierte Elemente und Sprungziele nicht verdecken (WCAG 2.4.11). */
+    scroll-padding-top: 4.5rem;
   }
 
   body {
     @apply bg-surface text-ink font-sans antialiased;
+    font-size: 1.0625rem; /* 17 px */
+    line-height: 1.5;
+    letter-spacing: -0.011em;
+    font-feature-settings: "cv11", "ss01";
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Lange deutsche Wörter dürfen auf schmalen Handys umbrechen statt überzulaufen. */
   h1,
   h2,
   h3 {
+    text-wrap: balance;
+    /* Lange Wörter (z. B. „Ernährungsberatung“) bei schmalen Fenstern und
+       400 % Zoom umbrechen statt überlaufen zu lassen (WCAG 1.4.10). */
     hyphens: auto;
     overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   :focus-visible {
     @apply outline-sage-600 outline-2 outline-offset-2;
   }
 
-  /* Weniger Bewegung, wenn im Betriebssystem eingestellt (WCAG 2.3.3, Best Practice). */
+  /* Weniger Bewegung, wenn im Betriebssystem eingestellt (WCAG 2.3.3). */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -116,9 +123,68 @@
       scroll-behavior: auto !important;
     }
 
-    /* Kein „Eindrücken“ der Buttons (active:scale-…) */
     :active {
       scale: none !important;
+    }
+  }
+}
+
+/* Typografie-Stufen im Stil großer Produktseiten */
+@utility text-display {
+  font-size: clamp(2.5rem, 1.6rem + 4.2vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 650;
+}
+
+@utility text-headline {
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 650;
+}
+
+@utility text-title {
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  font-weight: 650;
+}
+
+@utility text-lead {
+  font-size: clamp(1.1875rem, 1.1rem + 0.4vw, 1.375rem);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+@utility text-eyebrow {
+  font-size: 0.9375rem;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+/*
+ * Sanftes Einblenden beim Scrollen – nur per CSS (Scroll-Driven Animations).
+ * Browser ohne Unterstützung zeigen alles sofort; bei „Bewegung reduzieren“ entfällt es.
+ */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    translate: 0 2.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@utility reveal {
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
     }
   }
 }

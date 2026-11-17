@@ -1,24 +1,37 @@
 ---
-/** Einheitlicher Kopfbereich für Unterseiten: kleine Überzeile, Überschrift, Einleitung. */
+/** Einheitlicher Kopfbereich für Unterseiten: kleine Überzeile, große Überschrift, Einleitung. */
 interface Props {
   eyebrow?: string;
   title: string;
   /** Optional hervorgehobener Teil der Überschrift (wird grün dargestellt). */
   highlight?: string;
   lead?: string;
+  /** Zentriert (Standard) oder linksbündig, z. B. für lange Textseiten. */
+  align?: "center" | "left";
 }
-const { eyebrow, title, highlight, lead } = Astro.props;
+const { eyebrow, title, highlight, lead, align = "center" } = Astro.props;
+const centered = align === "center";
 ---
 
-<section class="mx-auto max-w-6xl px-4 pt-12 pb-8 sm:px-6 md:pt-20">
-  {eyebrow && (
-    <p class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
-      {eyebrow}
-    </p>
-  )}
-  <h1 class="max-w-3xl text-3xl leading-tight font-extrabold md:text-5xl">
+<section
+  class:list={[
+    "mx-auto max-w-6xl px-5 pt-16 pb-10 sm:px-6 md:pt-24 md:pb-14",
+    centered && "text-center",
+  ]}
+>
+  {eyebrow && <p class="text-eyebrow mb-3 text-sage-700">{eyebrow}</p>}
+  <h1 class:list={["text-display max-w-4xl", centered && "mx-auto"]}>
     {title} {highlight && <span class="text-sage-700">{highlight}</span>}
   </h1>
-  {lead && <p class="mt-4 max-w-2xl text-lg text-muted">{lead}</p>}
+  {lead && (
+    <p
+      class:list={[
+        "text-lead mt-5 max-w-2xl text-muted",
+        centered && "mx-auto",
+      ]}
+    >
+      {lead}
+    </p>
+  )}
   <slot />
 </section>

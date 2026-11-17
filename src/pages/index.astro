@@ -6,6 +6,7 @@ import Photo from "../components/Photo.astro";
 import Testimonials from "../components/Testimonials.astro";
 import { getImage } from "../data/images";
 import { serviceTeasers } from "../data/services";
+import { processSteps } from "../data/process";
 import { contact } from "../data/site";
 
 const formats = contact.formats.join(" & ");
@@ -29,134 +30,178 @@ const features = [
 ---
 
 <BaseLayout description="Ernährungsberatung mit Lea Petruschka: alltagstauglich, individuell und auf Augenhöhe.">
-  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-20">
-    <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-      <div class="min-w-0">
-        <p class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
-          Ernährungsberatung mit Lea Petruschka
-        </p>
-        <h1 class="text-[1.625rem] leading-tight font-extrabold min-[380px]:text-3xl sm:text-4xl md:text-5xl">
-          Ernährungsberatung, die in deinen{" "}
-          <span class="text-sage-700">Alltag passt.</span>
-        </h1>
-        <p class="mt-4 max-w-xl leading-relaxed text-muted">
-          Ich höre zu, erkläre verständlich und begleite dich Schritt für
-          Schritt. So findest du heraus, was dir guttut und was sich gut
-          durchhalten lässt.
-        </p>
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button href="/termin" icon="arrow-forward-rounded">
-            Termin buchen
-          </Button>
-          <Button href="/leistungen" variant="secondary">
-            Leistungen ansehen
-          </Button>
-        </div>
-      </div>
-      <!-- TODO(Lea): Titelbild als src/assets/images/hero.jpg ablegen -->
-      <Photo
-        image={getImage("hero")}
-        alt="Gesund zubereitete Mahlzeit"
-        aspect="landscape"
-        eager
-      />
+  <!-- Hero -->
+  <section class="px-5 pt-16 text-center sm:px-6 md:pt-28">
+    <p class="text-eyebrow text-sage-700">
+      Ernährungsberatung mit Lea Petruschka
+    </p>
+    <h1 class="text-display mx-auto mt-3 max-w-4xl">
+      Ernährung, die zu deinem Alltag passt.
+    </h1>
+    <p class="text-lead mx-auto mt-5 max-w-2xl text-muted">
+      Ich höre zu, erkläre verständlich und begleite dich Schritt für Schritt.
+      So findest du heraus, was dir guttut und was sich gut durchhalten lässt.
+    </p>
+    <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+      <Button href="/termin" size="lg">
+        Termin buchen
+      </Button>
+      <Button href="/leistungen" variant="link" size="lg">
+        Leistungen ansehen
+      </Button>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
-    <ul class="grid gap-4 md:grid-cols-3">
+  <div class="mx-auto mt-14 max-w-6xl px-5 sm:px-6 md:mt-20">
+    <!-- TODO(Lea): Titelbild als src/assets/images/hero.jpg ablegen -->
+    <Photo
+      image={getImage("hero")}
+      alt="Gesund zubereitete Mahlzeit"
+      aspect="wide"
+      sizes="(min-width: 1152px) 1104px, 100vw"
+      eager
+    />
+  </div>
+
+  <!-- Merkmale -->
+  <section
+    class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32"
+    aria-labelledby="merkmale"
+  >
+    <h2
+      id="merkmale"
+      class="text-headline reveal mx-auto max-w-3xl text-center"
+    >
+      Keine Diät. Sondern Gewohnheiten, die bleiben.
+    </h2>
+    <ul class="mt-14 grid gap-10 text-center md:mt-20 md:grid-cols-3 md:gap-8">
       {features.map((f) => (
-        <li class="flex items-start gap-4 rounded-2xl bg-sage-50 p-5">
-          <Icon name={f.icon} class="size-8 shrink-0 text-sage-700" />
-          <div>
-            <h2 class="font-bold">{f.title}</h2>
-            <p class="mt-1 text-sm leading-relaxed text-muted">{f.text}</p>
-          </div>
+        <li class="reveal">
+          <Icon name={f.icon} class="mx-auto size-10 text-sage-700" />
+          <h3 class="mt-4 text-xl font-semibold tracking-tight">{f.title}</h3>
+          <p class="mx-auto mt-2 max-w-xs text-muted">{f.text}</p>
         </li>
       ))}
     </ul>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-16">
-    <div class="grid items-center gap-8 md:grid-cols-2 md:gap-12">
-      <!-- TODO(Lea): Porträtfoto als src/assets/images/portrait.jpg ablegen -->
-      <Photo
-        image={getImage("portrait")}
-        alt="Porträtfoto von Lea Petruschka"
-        aspect="portrait"
-        class="max-w-sm md:max-w-none"
-      />
-      <div>
-        <p class="mb-3 text-xs font-bold tracking-widest text-sage-700 uppercase">
-          Über Lea Petruschka
+  <!-- Über Lea -->
+  <section class="bg-ink text-white" aria-labelledby="ueber-lea">
+    <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 sm:px-6 md:grid-cols-2 md:gap-16 md:py-32">
+      <div class="reveal order-2 md:order-1">
+        <p class="text-eyebrow text-sage-300">Über Lea Petruschka</p>
+        <h2 id="ueber-lea" class="text-headline mt-3">
+          Ernährung ist keine Einschränkung, sondern Lebensqualität.
+        </h2>
+        <p class="text-lead mt-6 text-white/70">
+          Ich begleite dich dabei, Gewohnheiten zu finden, die zu dir passen und
+          die du gern beibehältst.
         </p>
-        <h2 class="text-2xl font-extrabold md:text-3xl">Hallo, ich bin Lea.</h2>
-        <p class="mt-4 leading-relaxed text-muted">
-          Für mich bedeutet Ernährung keine Einschränkung, sondern
-          Lebensqualität. Ich begleite dich dabei, Gewohnheiten zu finden, die
-          zu dir passen und die du gern beibehältst.
-        </p>
-        <Button
+        <a
           href="/ueber-mich"
-          variant="secondary"
-          icon="arrow-forward-rounded"
-          class="mt-6"
+          class="group mt-8 inline-flex items-center gap-0.5 text-[1.0625rem] font-medium text-sage-300 underline-offset-4 hover:underline"
         >
           Mehr über mich
-        </Button>
+          <Icon
+            name="chevron-right-rounded"
+            class="size-[1.15em] transition-transform group-hover:translate-x-0.5"
+          />
+        </a>
+      </div>
+      <!-- TODO(Lea): Porträtfoto als src/assets/images/portrait.jpg ablegen -->
+      <div class="reveal order-1 md:order-2">
+        <Photo
+          image={getImage("portrait")}
+          alt="Porträtfoto von Lea Petruschka"
+          aspect="portrait"
+          class="mx-auto max-w-sm md:max-w-none"
+        />
       </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-16">
-    <div class="mb-8 flex items-end justify-between gap-4">
-      <h2 class="text-2xl font-extrabold md:text-3xl">Leistungen</h2>
-      <a
-        href="/leistungen"
-        class="font-semibold text-sage-700 underline-offset-4 hover:underline"
-      >
-        Alle Leistungen
-      </a>
+  <!-- Leistungen -->
+  <section class="bg-canvas" aria-labelledby="leistungen">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32">
+      <div class="reveal text-center">
+        <p class="text-eyebrow text-sage-700">Leistungen</p>
+        <h2 id="leistungen" class="text-headline mx-auto mt-3 max-w-3xl">
+          Begleitung, die zu dir passt.
+        </h2>
+        <Button href="/leistungen" variant="link" size="lg" class="mt-5">
+          Alle Leistungen ansehen
+        </Button>
+      </div>
+      <ul class="mt-14 grid gap-5 md:mt-16 md:grid-cols-3">
+        {serviceTeasers.map((s) => (
+          <li class="reveal">
+            <a
+              href={s.href}
+              class="group flex h-full flex-col rounded-tile bg-white p-8 transition duration-300 ease-soft hover:-translate-y-1 hover:shadow-[0_20px_40px_-20px_rgb(0_0_0/0.18)] md:p-10"
+            >
+              <Icon name={s.icon} class="size-9 text-sage-700" />
+              <h3 class="mt-6 text-2xl font-semibold tracking-tight [hyphens:manual]">
+                {s.title}
+              </h3>
+              <p class="mt-3 flex-1 text-muted">{s.summary}</p>
+              <span class="mt-6 inline-flex items-center gap-0.5 font-medium text-sage-700">
+                Mehr erfahren
+                <Icon
+                  name="chevron-right-rounded"
+                  class="size-[1.15em] transition-transform group-hover:translate-x-0.5"
+                />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
-    <ul class="grid gap-4 md:grid-cols-3">
-      {serviceTeasers.map((s) => (
-        <li>
-          <a
-            href={s.href}
-            class="group flex h-full flex-col rounded-2xl border border-sage-200 bg-white p-6 shadow-sm transition hover:border-sage-400 hover:shadow-md"
-          >
-            <Icon name={s.icon} class="mb-3 size-8 text-sage-700" />
-            <h3 class="text-lg font-bold">{s.title}</h3>
-            <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">
-              {s.summary}
-            </p>
-            <span class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-sage-700">
-              Mehr erfahren
-              <Icon
-                name="arrow-forward-rounded"
-                class="size-4 transition group-hover:translate-x-0.5"
-              />
-            </span>
-          </a>
+  </section>
+
+  <!-- Ablauf -->
+  <section
+    class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32"
+    aria-labelledby="ablauf"
+  >
+    <div class="reveal text-center">
+      <p class="text-eyebrow text-sage-700">So läuft es ab</p>
+      <h2 id="ablauf" class="text-headline mx-auto mt-3 max-w-3xl">
+        In drei Schritten zu deinem Plan.
+      </h2>
+    </div>
+    <ol class="mt-14 grid gap-10 md:mt-20 md:grid-cols-3 md:gap-8">
+      {processSteps.map((step, i) => (
+        <li class="reveal border-t border-line pt-6">
+          <p class="text-[0.9375rem] font-semibold text-sage-700 tabular-nums">
+            {String(i + 1).padStart(2, "0")}
+          </p>
+          <h3 class="text-title mt-2">{step.title}</h3>
+          <p class="mt-2 text-muted">{step.text}</p>
         </li>
       ))}
-    </ul>
+    </ol>
   </section>
 
   <Testimonials />
 
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
-    <div class="rounded-3xl bg-sage-50 p-8 text-center md:p-12">
-      <h2 class="text-2xl font-extrabold md:text-3xl">
+  <!-- Abschluss -->
+  <section class="border-t border-line" aria-labelledby="cta">
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 text-center sm:px-6 md:py-32">
+      <h2 id="cta" class="text-display">
         Bereit für den ersten Schritt?
       </h2>
-      <p class="mx-auto mt-3 max-w-xl text-muted">
+      <p class="text-lead mx-auto mt-5 max-w-2xl text-muted">
         Im ersten Termin schauen wir gemeinsam, was du dir wünschst und wie ich
         dich unterstützen kann.
       </p>
-      <Button href="/termin" icon="arrow-forward-rounded" class="mt-6">
-        Termin buchen
-      </Button>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <Button href="/termin" size="lg">
+          Termin buchen
+        </Button>
+        <Button href="/kontakt" variant="link" size="lg">
+          Frag mich etwas
+        </Button>
+      </div>
     </div>
   </section>
 </BaseLayout>
