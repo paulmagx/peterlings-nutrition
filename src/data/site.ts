@@ -9,7 +9,7 @@ export const site = {
 
 export type NavItem = { label: string; href: string; icon: string };
 
-/** Hauptnavigation: Header (Desktop) und Tab-Leiste (Handy). */
+/** Hauptnavigation: Kopfzeile (Desktop) und Menü (Handy). */
 export const mainNav: NavItem[] = [
   { label: "Start", href: "/", icon: "home-outline-rounded" },
   {
