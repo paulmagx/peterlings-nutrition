@@ -1,0 +1,67 @@
+---
+/**
+ * Dekorative 3D-Szene mit schwebendem, gesundem Essen hinter einem Abschnitt.
+ *
+ * Einbau: Elternelement `relative isolate overflow-hidden`, FoodScene als erstes Kind,
+ * Inhalt danach. Die Szene liegt hinter dem Inhalt und fängt keine Klicks ab.
+ *
+ * Three.js wird erst nachgeladen, wenn der Abschnitt in Sichtweite kommt (und nicht bei
+ * aktiviertem Datensparmodus). Ohne WebGL oder JavaScript bleibt die Fläche einfach leer.
+ * Logik: src/lib/food-scene.ts
+ */
+interface Props {
+  variant?: "hero" | "cta";
+}
+const { variant = "hero" } = Astro.props;
+---
+
+<div
+  class="pointer-events-none absolute inset-0 -z-10"
+  aria-hidden="true"
+  data-food-scene={variant}
+></div>
+
+<style is:global>
+  .food-scene-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.2s var(--ease-soft);
+  }
+  .food-scene-canvas.is-ready {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  import type { SceneVariant } from "../lib/food-scene";
+
+  const hosts = document.querySelectorAll<HTMLElement>("[data-food-scene]");
+  const saveData = (
+    navigator as Navigator & { connection?: { saveData?: boolean } }
+  ).connection?.saveData;
+
+  if (hosts.length && !saveData) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer.unobserve(entry.target);
+          const host = entry.target as HTMLElement;
+          const variant = host.dataset.foodScene as SceneVariant;
+          // Erst laden, wenn der Browser Luft hat – der Seiteninhalt geht vor.
+          const idle =
+            window.requestIdleCallback ?? ((cb) => setTimeout(cb, 200));
+          idle(() =>
+            import("../lib/food-scene").then((m) =>
+              m.mountFoodScene(host, variant),
+            ),
+          );
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+    hosts.forEach((host) => observer.observe(host));
+  }
+</script>

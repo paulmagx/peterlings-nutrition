@@ -1,4 +1,6 @@
 ---
+import Botanical from "./Botanical.astro";
+
 /** Einheitlicher Kopfbereich für Unterseiten: kleine Überzeile, große Überschrift, Einleitung. */
 interface Props {
   eyebrow?: string;
@@ -12,6 +14,20 @@ interface Props {
 const { eyebrow, title, highlight, lead, align = "center" } = Astro.props;
 const centered = align === "center";
 ---
+
+{centered && (
+  <div class="pointer-events-none relative mx-auto hidden max-w-6xl md:block">
+    <Botanical
+      draw={false}
+      class="absolute top-8 -left-6 h-72 -rotate-12 text-sage-300 lg:left-0"
+    />
+    <Botanical
+      draw={false}
+      flip
+      class="absolute top-16 -right-6 h-60 text-sage-300 lg:right-0"
+    />
+  </div>
+)}
 
 <section
   class:list={[
