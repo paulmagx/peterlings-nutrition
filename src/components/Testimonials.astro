@@ -1,11 +1,10 @@
 ---
 /**
- * Kundenstimmen als Karten. Quelle: `src/data/testimonials.ts`.
+ * Kundenstimmen als große Zitate auf einem hellgrauen Band. Quelle: `src/data/testimonials.ts`.
  * Ist das Array leer, rendert die Komponente gar nichts (auch keine Überschrift).
  * Keine Sterne-Bewertungen.
  */
 import { testimonials } from "../data/testimonials";
-import Icon from "./Icon.astro";
 
 interface Props {
   title?: string;
@@ -14,26 +13,34 @@ const { title = "Das sagen meine Kundinnen und Kunden" } = Astro.props;
 ---
 
 {testimonials.length > 0 && (
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
-    <h2 class="mb-8 text-2xl font-extrabold md:text-3xl">{title}</h2>
-    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {testimonials.map((t) => (
-        <li>
-          <figure class="flex h-full flex-col rounded-2xl border border-sage-200 bg-white p-6 shadow-sm">
-            <Icon
-              name="format-quote-rounded"
-              class="mb-3 size-8 text-sage-700"
-            />
-            <blockquote class="flex-1 text-base leading-relaxed text-ink">
-              <p>{t.quote}</p>
-            </blockquote>
-            <figcaption class="mt-5 border-t border-sage-200 pt-4 text-sm">
-              <span class="font-bold text-ink">{t.name}</span>
-              {t.context && <span class="block text-muted">{t.context}</span>}
-            </figcaption>
-          </figure>
-        </li>
-      ))}
-    </ul>
+  <section class="bg-canvas" aria-labelledby="stimmen">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32">
+      <h2
+        id="stimmen"
+        class="text-headline reveal mx-auto max-w-3xl text-center"
+      >
+        {title}
+      </h2>
+      <ul
+        class:list={[
+          "mt-14 grid gap-12 md:mt-20 md:gap-10",
+          testimonials.length > 1 && "md:grid-cols-2",
+        ]}
+      >
+        {testimonials.map((t) => (
+          <li class="reveal">
+            <figure class="mx-auto max-w-3xl text-center">
+              <blockquote class="text-title">
+                <p>„{t.quote}“</p>
+              </blockquote>
+              <figcaption class="mt-5 text-muted">
+                <span class="font-medium">{t.name}</span>
+                {t.context && <span>, {t.context}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
   </section>
 )}
