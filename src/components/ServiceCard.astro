@@ -1,0 +1,58 @@
+---
+/** Kachel für eine Leistung. Die empfohlene Leistung wird dezent hervorgehoben. */
+import type { Service } from "../data/services";
+import Icon from "./Icon.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  service: Service;
+  /** Ziel des Anfrage-Buttons. */
+  href?: string;
+}
+const { service, href = "/termin" } = Astro.props;
+const {
+  id,
+  category,
+  title,
+  price,
+  priceNote,
+  summary,
+  features,
+  highlighted,
+  icon,
+} = service;
+---
+
+<article
+  id={id}
+  class="flex h-full scroll-mt-24 flex-col rounded-tile bg-white p-8 md:p-10"
+>
+  <Icon name={icon} class="size-9 text-sage-700" />
+  <p class="text-eyebrow mt-6 text-sage-700">
+    {highlighted ? `Empfehlung · ${category}` : category}
+  </p>
+  <h3 class="text-title mt-1 [hyphens:manual]">{title}</h3>
+  <p class="mt-6">
+    <span class="text-title">{price}&nbsp;€</span>
+    <span class="ml-1 text-[0.9375rem] text-muted">{priceNote}</span>
+  </p>
+  <p class="mt-4 text-muted">{summary}</p>
+  <ul class="mt-6 mb-8 divide-y divide-line border-y border-line">
+    {features.map((feature) => (
+      <li class="flex items-center gap-3 py-3 text-[0.9375rem]">
+        <Icon
+          name="check-circle-outline-rounded"
+          class="size-5 shrink-0 text-sage-700"
+        />
+        {feature}
+      </li>
+    ))}
+  </ul>
+  <Button
+    href={href}
+    variant={highlighted ? "primary" : "secondary"}
+    class="mt-auto w-full"
+  >
+    Termin buchen
+  </Button>
+</article>

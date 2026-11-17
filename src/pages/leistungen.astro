@@ -1,0 +1,103 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import Button from "../components/Button.astro";
+import Faq from "../components/Faq.astro";
+import { services } from "../data/services";
+import { faqs } from "../data/faq";
+import { processSteps } from "../data/process";
+import { booking, isBookingConfigured } from "../data/booking";
+
+const steps = processSteps;
+---
+
+<BaseLayout
+  title="Leistungen"
+  description="Einzelberatung, individuelle Ernährungspläne sowie Einkaufstraining und Kühlschrank-Check mit Lea Petruschka."
+>
+  <PageIntro
+    eyebrow="Leistungen"
+    title="Wähle das Angebot, das"
+    highlight="zu dir passt."
+    lead="Persönliche Begleitung für deine Ernährung und deinen Lebensstil – mit Lea Petruschka."
+  />
+
+  <section class="bg-canvas" aria-labelledby="leistungen-heading">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32">
+      <h2 id="leistungen-heading" class="sr-only">
+        Meine Leistungen
+      </h2>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((service) => (
+          <div>
+            <ServiceCard
+              service={service}
+              href={
+                (isBookingConfigured &&
+                  booking.serviceUrls[
+                    service.id as keyof typeof booking.serviceUrls
+                  ]) ||
+                "/termin"
+              }
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32"
+    aria-labelledby="ablauf"
+  >
+    <div class="reveal text-center">
+      <h2 id="ablauf" class="text-headline mx-auto max-w-3xl">
+        So läuft die Beratung ab
+      </h2>
+    </div>
+    <ol class="mt-14 grid gap-10 md:mt-20 md:grid-cols-3 md:gap-8">
+      {steps.map((step, i) => (
+        <li class="reveal border-t border-line pt-6">
+          <p class="text-[0.9375rem] font-semibold text-sage-700 tabular-nums">
+            {String(i + 1).padStart(2, "0")}
+          </p>
+          <h3 class="text-title mt-2">{step.title}</h3>
+          <p class="mt-2 text-muted">{step.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="bg-canvas" aria-labelledby="faq-title">
+    <div class="mx-auto max-w-3xl px-5 py-20 sm:px-6 md:py-32">
+      <h2 id="faq-title" class="text-headline reveal text-center">
+        Häufige Fragen
+      </h2>
+      <div class="mt-12 md:mt-16">
+        <Faq items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cta">
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 text-center sm:px-6 md:py-32">
+      <h2 id="cta" class="text-display">
+        Nicht sicher, welche Leistung passt?
+      </h2>
+      <!-- TODO(Lea): Gibt es ein kostenloses Kennenlerngespräch? Wenn ja, hier erwähnen. -->
+      <p class="text-lead mx-auto mt-5 max-w-2xl text-muted">
+        Schreib mir einfach, was dich beschäftigt. Gemeinsam finden wir heraus,
+        welche Leistung für dich sinnvoll ist.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <Button href="/kontakt" size="lg">
+          Kontakt aufnehmen
+        </Button>
+        <Button href="/termin" variant="link" size="lg">
+          Termin buchen
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

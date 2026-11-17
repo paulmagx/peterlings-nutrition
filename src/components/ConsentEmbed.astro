@@ -1,0 +1,98 @@
+---
+/**
+ * Zwei-Klick-Lösung für externe Inhalte (Karte, Buchungstool, …).
+ * Vor dem Klick wird nichts vom Anbieter geladen; erst der Button fügt das iframe ein.
+ */
+interface Props {
+  /** Name des Anbieters, z. B. "OpenStreetMap". */
+  provider: string;
+  /** URL, die im iframe geladen wird. */
+  src: string;
+  /** Beschreibender Titel des iframes (für Screenreader). */
+  title: string;
+  /** Datenschutzerklärung des Anbieters. */
+  privacyUrl: string;
+  /** Beschriftung des Buttons. */
+  buttonLabel?: string;
+  /** Tailwind-Klassen für das Seitenverhältnis (verhindert Layoutsprünge). */
+  class?: string;
+  /** Feste Mindesthöhe in Pixeln (z. B. für Kalender). Ersetzt dann das Seitenverhältnis über `class`. */
+  minHeight?: number;
+  /** Serverstandort des Anbieters; wird im Hinweistext genannt, falls angegeben. */
+  serverLocation?: string;
+}
+const {
+  provider,
+  src,
+  title,
+  privacyUrl,
+  buttonLabel = "Karte laden",
+  class: className,
+  minHeight,
+  serverLocation,
+} = Astro.props;
+const sizeClass =
+  className ?? (minHeight ? "" : "min-h-[26rem] md:min-h-0 md:aspect-[16/10]");
+const sizeStyle = minHeight ? `min-height: ${minHeight}px` : undefined;
+---
+
+<div
+  class:list={[
+    "consent-embed relative overflow-hidden rounded-tile bg-canvas",
+    sizeClass,
+  ]}
+  style={sizeStyle}
+  data-src={src}
+  data-title={title}
+>
+  <div
+    class="consent-embed__prompt flex h-full flex-col items-center justify-center gap-4 p-8 text-center md:p-10"
+    style={sizeStyle}
+  >
+    <p class="text-xl font-semibold tracking-tight">{title}</p>
+    <p class="max-w-prose text-[0.9375rem] text-muted">
+      Wenn du den Inhalt lädst, wird eine Verbindung zu {provider}
+      {serverLocation && ` (Server in ${serverLocation})`} aufgebaut und dabei
+      werden Daten (z. B. deine IP-Adresse) an den Anbieter übertragen. Mehr
+      dazu in der{" "}
+      <a
+        href={privacyUrl}
+        class="font-medium text-sage-700 underline underline-offset-2"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Datenschutzerklärung von {provider}
+        <span class="sr-only">(öffnet in neuem Tab)</span>
+      </a>
+      .
+    </p>
+    <button
+      type="button"
+      class="consent-embed__button inline-flex items-center justify-center rounded-full bg-sage-700 px-7 py-3.5 text-[1.0625rem] font-medium text-white transition duration-200 ease-soft hover:bg-sage-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-700 active:scale-[0.98]"
+    >
+      {buttonLabel}
+    </button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".consent-embed").forEach((box) => {
+    const button = box.querySelector<HTMLButtonElement>(
+      ".consent-embed__button",
+    );
+    const prompt = box.querySelector<HTMLElement>(".consent-embed__prompt");
+    const src = box.dataset.src;
+    if (!button || !prompt || !src) return;
+    button.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.src = src;
+      frame.title = box.dataset.title ?? "";
+      frame.referrerPolicy = "no-referrer";
+      frame.className = "absolute inset-0 h-full w-full border-0";
+      prompt.replaceWith(frame);
+      // Der Button verschwindet, daher den Fokus auf das neue iframe setzen.
+      frame.tabIndex = 0;
+      frame.focus();
+    });
+  });
+</script>

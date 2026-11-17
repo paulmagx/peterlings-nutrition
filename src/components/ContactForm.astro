@@ -1,0 +1,230 @@
+---
+/** Kontaktformular. Ohne echten Endpunkt (siehe src/data/forms.ts) nur Hinweis + mailto-Link. */
+import { contact } from "../data/site";
+import { contactFormEndpoint } from "../data/forms";
+import { isPlaceholder } from "../lib/placeholder";
+
+// Nur für `npm run check:a11y`: im Dev-Server testweise anzeigen (A11Y_FORMS_PREVIEW=1).
+const a11yPreview =
+  import.meta.env.DEV && process.env.A11Y_FORMS_PREVIEW === "1";
+const endpointOk = a11yPreview || !isPlaceholder(contactFormEndpoint);
+const formAction = isPlaceholder(contactFormEndpoint)
+  ? "/"
+  : contactFormEndpoint;
+const emailOk = !isPlaceholder(contact.email);
+
+const field =
+  "mt-2 block w-full rounded-xl border border-muted bg-white px-4 py-3 text-ink focus:border-sage-700 focus:ring-2 focus:ring-sage-700/20 focus:outline-none";
+const label = "block font-medium";
+const hint = "mt-2 text-[0.9375rem] text-muted";
+---
+
+<section class="rounded-tile bg-white p-8 md:p-12" aria-labelledby="cf-heading">
+  <h2 id="cf-heading" class="text-title">
+    Schreib mir
+  </h2>
+
+  {endpointOk ? (
+    <form
+      id="contact-form"
+      action={formAction}
+      method="post"
+      class="relative mt-6 grid gap-6"
+    >
+      <p class={hint}>
+        Bitte schick mir hier noch keine ausführlichen Gesundheitsdaten –
+        darüber sprechen wir im Termin.
+      </p>
+
+      <div>
+        <label for="cf-name" class={label}>
+          Name
+        </label>
+        <input
+          id="cf-name"
+          name="name"
+          type="text"
+          required
+          autocomplete="name"
+          aria-describedby="cf-name-hint"
+          class={field}
+        />
+        <p id="cf-name-hint" class={hint}>
+          Pflichtfeld. Wie darf ich dich ansprechen?
+        </p>
+      </div>
+
+      <div>
+        <label for="cf-email" class={label}>
+          E-Mail
+        </label>
+        <input
+          id="cf-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          aria-describedby="cf-email-hint"
+          class={field}
+        />
+        <p id="cf-email-hint" class={hint}>
+          Pflichtfeld. Bitte eine gültige E-Mail-Adresse, z. B.
+          name@beispiel.de.
+        </p>
+      </div>
+
+      <div>
+        <label for="cf-subject" class={label}>
+          Anliegen
+        </label>
+        <select
+          id="cf-subject"
+          name="subject"
+          required
+          aria-describedby="cf-subject-hint"
+          class={field}
+        >
+          <option value="">Bitte auswählen</option>
+          <option value="Allgemeine Frage">Allgemeine Frage</option>
+          <option value="Terminanfrage">Terminanfrage</option>
+          <option value="Sonstiges">Sonstiges</option>
+        </select>
+        <p id="cf-subject-hint" class={hint}>
+          Pflichtfeld. Bitte wähle ein Anliegen aus.
+        </p>
+      </div>
+
+      <div>
+        <label for="cf-message" class={label}>
+          Nachricht
+        </label>
+        <textarea
+          id="cf-message"
+          name="message"
+          rows="6"
+          required
+          minlength="10"
+          aria-describedby="cf-message-hint"
+          class={field}
+        />
+        <p id="cf-message-hint" class={hint}>
+          Pflichtfeld, mindestens 10 Zeichen.
+        </p>
+      </div>
+
+      <div class="absolute -left-[9999px]" aria-hidden="true">
+        <label for="cf-website">Bitte leer lassen</label>
+        <input
+          id="cf-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        />
+      </div>
+
+      <div>
+        <div class="flex items-start gap-3">
+          <input
+            id="cf-privacy"
+            name="privacy"
+            type="checkbox"
+            value="akzeptiert"
+            required
+            aria-describedby="cf-privacy-hint"
+            class="mt-0.5 size-6 shrink-0 accent-sage-700"
+          />
+          <label for="cf-privacy">
+            Ich habe die{" "}
+            <a
+              href="/datenschutz"
+              class="font-medium text-sage-700 underline underline-offset-2"
+            >
+              Datenschutzerklärung
+            </a>{" "}
+            gelesen und bin einverstanden, dass meine Angaben zur Bearbeitung
+            meiner Anfrage verwendet werden.
+          </label>
+        </div>
+        <p id="cf-privacy-hint" class={hint}>
+          Pflichtfeld: Ohne dein Einverständnis kann ich die Nachricht nicht
+          verarbeiten.
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        class="inline-flex w-full items-center justify-center rounded-full bg-sage-700 px-8 py-4 text-[1.0625rem] font-medium text-white transition duration-200 ease-soft hover:bg-sage-800 disabled:opacity-60 active:scale-[0.98] sm:w-auto sm:justify-self-start"
+      >
+        Nachricht senden
+      </button>
+
+      <div
+        id="cf-status"
+        role="status"
+        aria-live="polite"
+        class="font-medium"
+      />
+    </form>
+  ) : (
+    <div class="mt-6 rounded-2xl bg-canvas p-6">
+      <p>
+        Das Kontaktformular ist gerade noch nicht freigeschaltet. Schreib mir
+        bis dahin gern direkt eine E-Mail.
+      </p>
+      {emailOk ? (
+        <p class="mt-3">
+          <a
+            href={`mailto:${contact.email}`}
+            class="font-medium text-sage-700 underline underline-offset-2 break-words"
+          >
+            {contact.email}
+          </a>
+        </p>
+      ) : (
+        <p class="mt-3 text-[0.9375rem] text-muted">
+          E-Mail-Adresse wird ergänzt.
+        </p>
+      )}
+      <p class={hint}>
+        Bitte schick mir per E-Mail noch keine ausführlichen Gesundheitsdaten –
+        darüber sprechen wir im Termin.
+      </p>
+    </div>
+  )}
+</section>
+
+{endpointOk && <script>
+  const form = document.querySelector<HTMLFormElement>("#contact-form");
+  const status = document.querySelector<HTMLElement>("#cf-status");
+  if (form && status) {
+    form.addEventListener("submit", async (event) => {
+      if (!form.checkValidity()) return; // Browser zeigt die Validierung
+      event.preventDefault();
+      const button = form.querySelector<HTMLButtonElement>(
+        "button[type=submit]",
+      );
+      if (button) button.disabled = true;
+      status.className = "font-medium text-ink";
+      status.textContent = "Wird gesendet …";
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error(String(response.status));
+        form.reset();
+        status.className = "font-medium text-sage-700";
+        status.textContent =
+          "Danke für deine Nachricht! Ich melde mich so bald wie möglich bei dir.";
+      } catch {
+        status.className = "font-medium text-red-700";
+        status.textContent =
+          "Das Senden hat leider nicht geklappt. Bitte versuch es später noch einmal oder schreib mir eine E-Mail.";
+      } finally {
+        if (button) button.disabled = false;
+      }
+    });
+  }
+</script>}

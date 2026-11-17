@@ -1,0 +1,186 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Button from "../components/Button.astro";
+import Icon from "../components/Icon.astro";
+import Photo from "../components/Photo.astro";
+import { getImage } from "../data/images";
+
+const values = [
+  {
+    icon: "biotech-outline",
+    title: "Fundiert",
+    // TODO(Lea): Falls zutreffend, konkret nennen, z. B. „orientiert an den Empfehlungen der DGE“.
+    text: "Ich orientiere mich an anerkannten Empfehlungen der Ernährungswissenschaft und übersetze sie so, dass du sie im Alltag wirklich nutzen kannst.",
+  },
+  {
+    icon: "spa-outline",
+    title: "Ganzheitlich",
+    text: "Essen ist mehr als Nährstoffe. Ich schaue auch auf Alltag, Bewegung, Stress und Schlaf, denn alles zusammen beeinflusst dein Wohlbefinden.",
+  },
+  {
+    icon: "volunteer-activism-outline",
+    title: "Individuell",
+    text: "Du bist kein Durchschnitt. Deine Ziele, Vorlieben und Lebensumstände bestimmen, was zu dir passt, nicht ein fertiger Standardplan.",
+  },
+];
+
+const principles = [
+  {
+    title: "Zuhören zuerst",
+    text: "Am Anfang steht dein Alltag: Was beschäftigt dich, was hast du bereits ausprobiert, was soll sich ändern?",
+  },
+  {
+    title: "Kleine Schritte",
+    text: "Statt alles auf einmal umzukrempeln, wählen wir Veränderungen, die du wirklich durchhältst.",
+  },
+  {
+    title: "Genuss statt Verbote",
+    text: "Ernährung soll Lebensqualität sein und keine Einschränkung. Es gibt keine verbotenen Lebensmittel.",
+  },
+  {
+    title: "Ehrlich und auf Augenhöhe",
+    text: "Ich begleite dich und unterstütze dich bei deinen Entscheidungen. Meine Beratung ersetzt keine ärztliche Behandlung.",
+  },
+];
+
+const credentials = [
+  "Ausbildung / Studium",
+  "Zertifizierungen und Weiterbildungen",
+  "Berufserfahrung (Jahre, Stationen)",
+  "Schwerpunkte und Spezialisierungen",
+];
+---
+
+<BaseLayout
+  title="Über mich"
+  description="Lea Petruschka stellt sich vor: Arbeitsweise, Werte und Werdegang."
+>
+  <PageIntro
+    eyebrow="Über Lea Petruschka"
+    title="Deine Begleiterin für"
+    highlight="Ernährung im Alltag."
+    lead="Für mich bedeutet Ernährung keine Einschränkung, sondern Lebensqualität."
+  />
+
+  <!-- Porträt und Vorstellung -->
+  <section
+    class="mx-auto max-w-6xl px-5 pt-6 pb-20 sm:px-6 md:pb-32"
+    aria-labelledby="hallo"
+  >
+    <div class="grid items-center gap-10 md:grid-cols-2 md:gap-16">
+      <!-- TODO(Lea): Porträtfoto als src/assets/images/portrait.jpg ablegen -->
+      <Photo
+        image={getImage("portrait")}
+        alt="Porträtfoto von Lea Petruschka"
+        aspect="portrait"
+        class="mx-auto max-w-sm md:max-w-none"
+      />
+      <div>
+        <h2 id="hallo" class="text-headline">
+          Hallo, ich bin Lea.
+        </h2>
+        <p class="text-lead mt-6 text-muted">
+          Ich bin Lea Petruschka und begleite dich bei Peterlings Nutrition auf
+          dem Weg zu deinem persönlichen Wohlbefinden. Für mich bedeutet
+          Ernährung keine Einschränkung, sondern Lebensqualität.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leitsatz -->
+  <section class="bg-ink text-white" aria-label="Mein Ziel">
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 text-center sm:px-6 md:py-32">
+      <p class="text-eyebrow text-sage-300">Mein Ziel</p>
+      <p class="text-headline mt-4">
+        Ernährungswissen so zu übersetzen, dass daraus alltagstaugliche und
+        genussvolle Gewohnheiten werden, die zu dir passen.
+      </p>
+    </div>
+  </section>
+
+  <!-- Werte -->
+  <section
+    class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32"
+    aria-labelledby="werte"
+  >
+    <h2 id="werte" class="text-headline reveal text-center">
+      Wofür ich stehe
+    </h2>
+    <ul class="mt-14 grid gap-12 text-center md:mt-20 md:grid-cols-3 md:gap-8">
+      {values.map((v) => (
+        <li class="reveal">
+          <Icon name={v.icon} class="mx-auto size-10 text-sage-700" />
+          <h3 class="text-title mt-5">{v.title}</h3>
+          <p class="mx-auto mt-3 max-w-xs text-muted">{v.text}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- So arbeite ich -->
+  <section class="bg-canvas" aria-labelledby="arbeitsweise">
+    <div class="mx-auto max-w-4xl px-5 py-20 sm:px-6 md:py-32">
+      <h2 id="arbeitsweise" class="text-headline reveal text-center">
+        So arbeite ich
+      </h2>
+      <ol class="mt-14 md:mt-20">
+        {principles.map((p, i) => (
+          <li class="reveal grid gap-x-8 gap-y-2 border-t border-line py-8 last:border-b md:grid-cols-[4rem_1fr] md:py-10">
+            <p class="text-[0.9375rem] font-semibold text-sage-700 tabular-nums md:pt-2">
+              {String(i + 1).padStart(2, "0")}
+            </p>
+            <div>
+              <h3 class="text-title">{p.title}</h3>
+              <p class="mt-2 max-w-xl text-muted">{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Qualifikationen -->
+  <section
+    class="mx-auto max-w-4xl px-5 py-20 sm:px-6 md:py-32"
+    aria-labelledby="werdegang"
+  >
+    <div class="reveal text-center">
+      <h2 id="werdegang" class="text-headline">
+        Qualifikationen &amp; Werdegang
+      </h2>
+      <p class="text-lead mt-4 text-muted">
+        Diesen Bereich ergänze ich in Kürze.
+      </p>
+    </div>
+    <ul class="mt-12 md:mt-16">
+      {credentials.map((c) => (
+        <li class="border-t border-dashed border-muted/60 py-5 text-muted last:border-b">
+          TODO(Lea): {c}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- Abschluss -->
+  <section class="border-t border-line" aria-labelledby="cta">
+    <div class="reveal mx-auto max-w-4xl px-5 py-20 text-center sm:px-6 md:py-32">
+      <h2 id="cta" class="text-display">
+        Lernen wir uns kennen
+      </h2>
+      <p class="text-lead mx-auto mt-5 max-w-2xl text-muted">
+        Im ersten Termin schauen wir gemeinsam, was du dir wünschst und wie ich
+        dich unterstützen kann.
+      </p>
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+        <Button href="/termin" size="lg">
+          Termin buchen
+        </Button>
+        <Button href="/kontakt" variant="link" size="lg">
+          Frag mich etwas
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

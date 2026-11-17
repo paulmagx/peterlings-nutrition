@@ -1,0 +1,46 @@
+---
+/**
+ * Kundenstimmen als große Zitate auf einem hellgrauen Band. Quelle: `src/data/testimonials.ts`.
+ * Ist das Array leer, rendert die Komponente gar nichts (auch keine Überschrift).
+ * Keine Sterne-Bewertungen.
+ */
+import { testimonials } from "../data/testimonials";
+
+interface Props {
+  title?: string;
+}
+const { title = "Das sagen meine Kundinnen und Kunden" } = Astro.props;
+---
+
+{testimonials.length > 0 && (
+  <section class="bg-canvas" aria-labelledby="stimmen">
+    <div class="mx-auto max-w-6xl px-5 py-20 sm:px-6 md:py-32">
+      <h2
+        id="stimmen"
+        class="text-headline reveal mx-auto max-w-3xl text-center"
+      >
+        {title}
+      </h2>
+      <ul
+        class:list={[
+          "mt-14 grid gap-12 md:mt-20 md:gap-10",
+          testimonials.length > 1 && "md:grid-cols-2",
+        ]}
+      >
+        {testimonials.map((t) => (
+          <li class="reveal">
+            <figure class="mx-auto max-w-3xl text-center">
+              <blockquote class="text-title">
+                <p>„{t.quote}“</p>
+              </blockquote>
+              <figcaption class="mt-5 text-muted">
+                <span class="font-medium">{t.name}</span>
+                {t.context && <span>, {t.context}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}

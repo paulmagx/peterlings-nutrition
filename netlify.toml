@@ -1,0 +1,40 @@
+# Netlify-Konfiguration (Issue #32). Anleitung und Begründung: docs/hosting.md
+#
+# Build und Veröffentlichung macht Netlify selbst (Git-Anbindung), eine GitHub-Action ist nicht nötig.
+# Die 404-Seite (dist/404.html) liefert Netlify automatisch bei unbekannten Adressen aus.
+# Die Weiterleitung zwischen peterlings-nutrition.de und www.peterlings-nutrition.de
+# richtet Netlify über die "Primary domain" ein (siehe docs/hosting.md), nicht über Regeln hier.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# ── Sicherheits-Header für alle Seiten ───────────────────────────────────────
+# CSP: Der Build erzeugt keine Inline-Skripte oder -Stylesheets (astro.config.mjs),
+# deshalb reicht script-src 'self'. Nur style-Attribute (z. B. Höhe des Embeds) sind inline erlaubt.
+# frame-src: nur die Anbieter der Zwei-Klick-Einbettungen (src/data/booking.ts, src/pages/kontakt.astro).
+# Neue Dienste (Statistik, Newsletter, anderer Buchungsanbieter) hier ergänzen, sonst blockt der Browser sie.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://zeeg.me https://*.zeeg.me https://www.openstreetmap.org; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000"
+
+# ── Caching ──────────────────────────────────────────────────────────────────
+# /_astro/* hat Hash im Dateinamen und ändert sich nie unter derselben Adresse.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML immer prüfen lassen, damit Änderungen sofort sichtbar sind.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

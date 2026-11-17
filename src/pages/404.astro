@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+---
+
+<BaseLayout title="Seite nicht gefunden" noindex>
+  <section class="mx-auto max-w-4xl px-5 py-24 text-center sm:px-6 md:py-40">
+    <p class="text-eyebrow text-sage-700">Fehler 404</p>
+    <h1 class="text-display mt-3">Hier ist leider nichts zu finden.</h1>
+    <p class="text-lead mx-auto mt-5 max-w-xl text-muted">
+      Die Seite gibt es nicht mehr oder sie wurde verschoben. Vielleicht findest
+      du über die Startseite oder meine Leistungen trotzdem, was du suchst.
+    </p>
+    <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+      <Button href="/" size="lg">
+        Zur Startseite
+      </Button>
+      <Button href="/leistungen" variant="link" size="lg">
+        Leistungen ansehen
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

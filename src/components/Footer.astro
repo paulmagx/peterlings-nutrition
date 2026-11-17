@@ -1,0 +1,86 @@
+---
+/** Ruhige Fußzeile im Stil großer Produktseiten: klein, grau, klar gegliedert. */
+import Icon from "./Icon.astro";
+import NewsletterSignup from "./NewsletterSignup.astro";
+import {
+  site,
+  mainNav,
+  legalNav,
+  socialLinks,
+  bookingLink,
+} from "../data/site";
+import { isActive } from "../lib/nav";
+
+const year = new Date().getFullYear();
+const path = Astro.url.pathname;
+const linkClass =
+  "inline-block py-1 text-muted transition-colors hover:text-ink hover:underline underline-offset-2 aria-[current=page]:text-ink aria-[current=page]:font-medium";
+---
+
+<footer class="bg-canvas text-[0.8125rem] leading-relaxed">
+  <div class="mx-auto max-w-6xl px-5 pt-10 pb-8 sm:px-6">
+    <NewsletterSignup />
+
+    <div class="grid gap-8 border-b border-line pb-8 sm:grid-cols-3">
+      <div>
+        <p class="font-semibold text-ink">{site.name}</p>
+        <p class="mt-1 max-w-xs text-muted">{site.tagline}</p>
+        {socialLinks.length > 0 && (
+          <ul class="mt-3 flex gap-1">
+            {socialLinks.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`${item.label} (öffnet in neuem Tab)`}
+                  class="flex size-10 items-center justify-center rounded-full text-muted hover:bg-black/5 hover:text-ink"
+                >
+                  <Icon name={item.icon} class="size-5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <nav aria-label="Seiten">
+        <h2 class="mb-1 font-semibold text-ink">Entdecken</h2>
+        <ul>
+          {[...mainNav, bookingLink].map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(path, item.href) ? "page" : undefined}
+                class={linkClass}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Rechtliches">
+        <h2 class="mb-1 font-semibold text-ink">Rechtliches</h2>
+        <ul>
+          {legalNav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={isActive(path, item.href) ? "page" : undefined}
+                class={linkClass}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <p class="pt-5 text-muted">
+      Copyright © {year} {site.name}. Alle Rechte vorbehalten.
+    </p>
+  </div>
+</footer>

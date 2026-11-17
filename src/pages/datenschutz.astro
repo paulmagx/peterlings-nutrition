@@ -1,0 +1,394 @@
+---
+/**
+ * Datenschutzerklärung (DSGVO), zugeschnitten auf den aktuellen Stand der Website:
+ * statische Seite, Schrift und Icons lokal eingebunden, keine Cookies, kein Tracking.
+ *
+ * WICHTIG: Dieser Text ist eine VORLAGE, keine Rechtsberatung. Vor der Veröffentlichung
+ * muss er rechtlich geprüft bzw. mit einem Generator (z. B. eRecht24) abgeglichen werden.
+ * Solange irgendwo "TODO(" steht, zeigt die Seite oben einen sichtbaren Hinweis-Kasten.
+ *
+ * Pflege: Jeder Abschnitt ist ein Eintrag im Array `sections`. Neuen Dienst einbinden
+ * (z. B. Buchungstool, Kontaktformular, Statistik) → Abschnitt ergänzen; Dienst entfällt
+ * → Abschnitt löschen. Inhaltsverzeichnis und Sprungmarken entstehen automatisch.
+ * Blöcke: { p } Absatz, { list } Aufzählung, { h3 } Zwischenüberschrift, { todo } Platzhalter.
+ * `p` und `list` dürfen einfaches HTML enthalten (Links, <strong>) – nur eigene Texte!
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import Icon from "../components/Icon.astro";
+import { contact } from "../data/site";
+import { booking } from "../data/booking";
+
+type Block =
+  { p: string } | { list: string[] } | { h3: string } | { todo: string };
+type Section = { id: string; title: string; blocks: Block[] };
+
+/** Lokale Hilfsfunktion: Ist der Wert noch ein Platzhalter aus site.ts? */
+const isPlaceholder = (value: string) => value.includes("TODO(");
+
+const todoClass =
+  "rounded-lg bg-canvas px-2 py-0.5 font-medium text-ink ring-1 ring-sage-700/50 ring-inset [box-decoration-break:clone] [-webkit-box-decoration-break:clone]";
+const linkClass =
+  "text-sage-700 underline underline-offset-2 hover:text-sage-800";
+
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/** Kontaktwert als HTML: Platzhalter sichtbar markieren, sonst ggf. verlinken. */
+const contactHtml = (value: string, href?: string) => {
+  if (isPlaceholder(value))
+    return `<span class="${todoClass}">${escapeHtml(value)}</span>`;
+  return href
+    ? `<a href="${escapeHtml(href)}" class="${linkClass}">${escapeHtml(value)}</a>`
+    : escapeHtml(value);
+};
+
+const sections: Section[] = [
+  // ── Überblick ────────────────────────────────────────────────────────────
+  {
+    id: "ueberblick",
+    title: "Datenschutz auf einen Blick",
+    blocks: [
+      {
+        p: "Der Schutz deiner persönlichen Daten ist mir wichtig. Diese Website ist bewusst sparsam gebaut: Sie selbst verwendet keine Cookies, kein Tracking und keine Analyse-Tools. Schrift und Icons sind lokal eingebunden, beim Seitenaufruf werden also keine Daten an Google oder ähnliche Anbieter übertragen.",
+      },
+      {
+        p: "Im Folgenden erfährst du, welche personenbezogenen Daten trotzdem anfallen (z. B. technisch bedingt beim Hosting oder wenn du mich kontaktierst), wofür sie verwendet werden und welche Rechte du hast.",
+      },
+    ],
+  },
+
+  // ── Verantwortliche ──────────────────────────────────────────────────────
+  {
+    id: "verantwortliche",
+    title: "Verantwortliche Stelle",
+    blocks: [
+      {
+        p: "Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:",
+      },
+      {
+        p: [
+          escapeHtml(contact.owner),
+          contactHtml(contact.street),
+          contactHtml(contact.city),
+        ].join("<br />"),
+      },
+      {
+        p: `E-Mail: ${contactHtml(contact.email, `mailto:${contact.email}`)}<br />Telefon: ${contactHtml(contact.phone, `tel:${contact.phone.replace(/[^\d+]/g, "")}`)}`,
+      },
+      {
+        p: "Eine Datenschutzbeauftragte bzw. ein Datenschutzbeauftragter ist nicht benannt.",
+      },
+      {
+        todo: "TODO(Lea): Prüfen lassen, ob wegen der Verarbeitung von Gesundheitsdaten eine Pflicht zur Benennung einer bzw. eines Datenschutzbeauftragten besteht (§ 38 BDSG, Art. 37 DSGVO). Wenn nicht, kann der Satz oben um „da hierzu keine gesetzliche Pflicht besteht“ ergänzt werden.",
+      },
+    ],
+  },
+
+  // ── Hosting ──────────────────────────────────────────────────────────────
+  {
+    id: "hosting",
+    title: "Hosting",
+    blocks: [
+      {
+        p: "Diese Website wird bei einem externen Dienstleister (Hoster) betrieben. Die Seiten sind statisch, das heißt, es gibt keine Datenbank und keine Benutzerkonten. Personenbezogene Daten, die beim Aufruf der Website anfallen (siehe „Server-Logfiles“), werden auf den Servern des Hosters verarbeitet.",
+      },
+      {
+        todo: "TODO(Lea): Hosting-Anbieter eintragen, sobald entschieden (Netlify oder Cloudflare Pages, Meilenstein 4): Name und Anschrift des Anbieters, Serverstandort, Hinweis auf den Vertrag zur Auftragsverarbeitung (Art. 28 DSGVO), Grundlage für eine etwaige Übermittlung in die USA (z. B. EU-US Data Privacy Framework / Standardvertragsklauseln) und Link zur Datenschutzerklärung des Anbieters.",
+      },
+      {
+        p: "Die Nutzung des Hosters erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt in einer sicheren, schnellen und zuverlässigen Bereitstellung der Website.",
+      },
+    ],
+  },
+
+  // ── Server-Logfiles ──────────────────────────────────────────────────────
+  {
+    id: "server-logfiles",
+    title: "Server-Logfiles",
+    blocks: [
+      {
+        p: "Bei jedem Aufruf der Website erfasst der Hoster automatisch Informationen, die dein Browser übermittelt, in sogenannten Server-Logfiles. Das sind in der Regel:",
+      },
+      {
+        list: [
+          "IP-Adresse des anfragenden Geräts",
+          "Datum und Uhrzeit des Zugriffs",
+          "aufgerufene Seite bzw. Datei",
+          "Referrer-URL (die zuvor besuchte Seite)",
+          "Browsertyp und -version, Betriebssystem",
+          "übertragene Datenmenge und HTTP-Statuscode",
+        ],
+      },
+      {
+        p: "Ich führe diese Daten nicht mit anderen Datenquellen zusammen und werte sie nicht aus, um Besucherinnen und Besucher zu identifizieren. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO; mein berechtigtes Interesse liegt in der technisch fehlerfreien Darstellung und der Sicherheit der Website (z. B. Abwehr von Angriffen).",
+      },
+      {
+        todo: "TODO(Lea): Speicherdauer der Logfiles laut gewähltem Hosting-Anbieter ergänzen und prüfen, ob der Anbieter die Logfiles selbst auswertet.",
+      },
+    ],
+  },
+
+  // ── Kontakt ──────────────────────────────────────────────────────────────
+  {
+    id: "kontakt",
+    title: "Kontakt per E-Mail oder Telefon",
+    blocks: [
+      {
+        p: "Wenn du mich per E-Mail oder Telefon kontaktierst, verarbeite ich deine Angaben (z. B. Name, E-Mail-Adresse, Telefonnummer und den Inhalt deiner Nachricht), um deine Anfrage zu beantworten und gegebenenfalls einen Termin zu vereinbaren.",
+      },
+      {
+        p: "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, wenn deine Anfrage mit einem Vertrag oder vorvertraglichen Maßnahmen zusammenhängt, ansonsten Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen).",
+      },
+      {
+        p: "Ich lösche deine Daten, sobald sie für den Zweck nicht mehr erforderlich sind, es sei denn, gesetzliche Aufbewahrungspflichten (z. B. nach Handels- und Steuerrecht) stehen dem entgegen.",
+      },
+      {
+        p: "Bitte beachte: Eine normale E-Mail ist nicht Ende-zu-Ende-verschlüsselt. Schick mir deshalb bitte keine ausführlichen Gesundheitsinformationen per E-Mail, bevor wir besprochen haben, wie wir damit umgehen (siehe „Gesundheitsdaten“).",
+      },
+      {
+        todo: "TODO(Lea): E-Mail-Anbieter (Postfach) nennen, falls er als Auftragsverarbeiter aufgeführt werden soll.",
+      },
+      {
+        todo: "TODO(Lea): Sobald das Kontaktformular freigeschaltet ist: Abschnitt um das Formular und den Formular-Dienst (Anbieter, Serverstandort, Vertrag zur Auftragsverarbeitung) ergänzen, siehe docs/kontaktformular.md.",
+      },
+    ],
+  },
+
+  // ── Karte (Zwei-Klick) ───────────────────────────────────────────────────
+  // Muss zur Umsetzung auf der Kontaktseite passen (Issue Kontakt/Karte). Entfernen, falls keine Karte kommt.
+  {
+    id: "karte",
+    title: "Kartendarstellung (OpenStreetMap)",
+    blocks: [
+      {
+        p: "Auf der Kontaktseite kann eine Karte mit dem Standort der Praxis angezeigt werden. Die Karte wird <strong>nicht automatisch</strong> geladen. Erst wenn du aktiv auf „Karte laden“ klickst, werden Kartendaten vom Dienst OpenStreetMap abgerufen.",
+      },
+      {
+        p: "Anbieter ist die OpenStreetMap Foundation (OSMF), Cambridge, Vereinigtes Königreich. Beim Laden der Karte wird deine IP-Adresse sowie technische Informationen deines Browsers an die Server von OpenStreetMap übertragen. Für das Vereinigte Königreich besteht ein Angemessenheitsbeschluss der EU-Kommission.",
+      },
+      {
+        todo: "TODO(Lea): Vor dem Livegang prüfen, ob der Angemessenheitsbeschluss für das Vereinigte Königreich noch gilt.",
+      },
+      {
+        p:
+          'Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG), die du durch den Klick erteilst. Du kannst sie jederzeit mit Wirkung für die Zukunft widerrufen, indem du die Seite neu lädst; die Karte wird dann erst nach einem erneuten Klick wieder geladen. Mehr dazu in der <a href="https://osmfoundation.org/wiki/Privacy_Policy" class="' +
+          linkClass +
+          '" rel="noopener noreferrer">Datenschutzerklärung der OpenStreetMap Foundation</a>.',
+      },
+    ],
+  },
+
+  // ── Terminbuchung ────────────────────────────────────────────────────────
+  // Angaben kommen aus src/data/booking.ts. Text mit dem Generator abgleichen.
+  {
+    id: "terminbuchung",
+    title: "Online-Terminbuchung",
+    blocks: [
+      {
+        p: `Für die Online-Terminbuchung nutze ich den Dienst ${booking.providerName} (${booking.providerLegal}). Wenn du einen Termin buchst, werden die von dir eingegebenen Daten (Name, E-Mail-Adresse, ggf. Telefonnummer), der gewählte Termin und die gewählte Leistung sowie technische Daten (z. B. IP-Adresse, Zeitpunkt der Buchung) an ${booking.providerName} übermittelt und dort gespeichert. ${booking.providerName} verarbeitet die Daten nach eigenen Angaben auf Servern in ${booking.serverLocation}.`,
+      },
+      {
+        p: "Zweck der Verarbeitung ist die Vereinbarung und Durchführung des Termins. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertrag bzw. vorvertragliche Maßnahmen).",
+      },
+      {
+        todo: "TODO(Lea): Vertrag zur Auftragsverarbeitung (AVV) mit dem Anbieter abschließen. Erst danach hier ergänzen: „Mit dem Anbieter habe ich einen Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO geschlossen.“ Außerdem den Serverstandort mit dem AVV abgleichen (Zeeg nennt in der Hilfe zusätzlich die Niederlande).",
+      },
+      {
+        p: "Bitte gib im Buchungsformular keine Angaben zu deiner Gesundheit an. Darüber sprechen wir im Termin.",
+      },
+      {
+        p: `Auf der Seite „Termin buchen“ kannst du den Buchungskalender von ${booking.providerName} direkt laden. Der Kalender wird erst angezeigt, wenn du auf „Kalender laden“ klickst. Erst dann wird eine Verbindung zu den Servern von ${booking.providerName} aufgebaut und deine IP-Adresse und technische Browserdaten werden übermittelt. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Du kannst sie jederzeit mit Wirkung für die Zukunft widerrufen, indem du die Seite neu lädst; der Kalender wird dann erst nach einem erneuten Klick wieder geladen. Alternativ kannst du die Buchungsseite direkt in einem neuen Tab öffnen.`,
+      },
+      {
+        p: `Weitere Informationen findest du in der <a href="${booking.privacyUrl}" class="${linkClass}" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von ${booking.providerName}<span class="sr-only"> (öffnet in neuem Tab)</span></a>.`,
+      },
+      {
+        todo: "TODO(Lea): Speicherdauer der Buchungsdaten festlegen (Löschfristen im Buchungstool) und hier ergänzen; ggf. Videodienst und Online-Zahlung (Stripe) ergänzen, falls genutzt.",
+      },
+    ],
+  },
+
+  // ── Gesundheitsdaten ─────────────────────────────────────────────────────
+  {
+    id: "gesundheitsdaten",
+    title: "Gesundheitsdaten in der Beratung",
+    blocks: [
+      {
+        p: "Für eine individuelle Ernährungsberatung können Angaben zu deiner Gesundheit hilfreich sein, zum Beispiel Unverträglichkeiten, Vorerkrankungen, Medikamente oder Ernährungsgewohnheiten. Solche Gesundheitsdaten gehören zu den besonderen Kategorien personenbezogener Daten nach Art. 9 DSGVO und sind besonders geschützt.",
+      },
+      {
+        p: "Ich verarbeite Gesundheitsdaten <strong>nur mit deiner ausdrücklichen Einwilligung</strong> (Art. 9 Abs. 2 lit. a DSGVO) und nur, soweit sie für die Beratung erforderlich sind. Über diese Website frage ich keine Gesundheitsdaten ab.",
+      },
+      {
+        p: "Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt davon unberührt.",
+      },
+      {
+        todo: "TODO(Lea): Ergänzen, wie die Einwilligung eingeholt wird (z. B. schriftlich vor dem ersten Termin), wo die Beratungsunterlagen gespeichert werden und wie lange sie aufbewahrt werden.",
+      },
+    ],
+  },
+
+  // ── Cookies ──────────────────────────────────────────────────────────────
+  {
+    id: "cookies",
+    title: "Keine Cookies, kein Tracking",
+    blocks: [
+      {
+        p: "Diese Website selbst setzt keine Cookies und speichert keine Informationen auf deinem Gerät. Es werden keine Analyse-, Tracking- oder Werbedienste eingesetzt und keine Social-Media-Plugins eingebunden. Deshalb erscheint auch kein Cookie-Banner. Lädst du per Klick die Karte oder den Buchungskalender, gelten dafür die Datenschutzbestimmungen des jeweiligen Anbieters (siehe oben); diese können eigene Cookies setzen.",
+      },
+      {
+        p: "Sollte sich das ändern (z. B. durch eine datenschutzfreundliche Besucherstatistik), wird diese Datenschutzerklärung vorher angepasst.",
+      },
+    ],
+  },
+
+  // ── Rechte ───────────────────────────────────────────────────────────────
+  {
+    id: "rechte",
+    title: "Deine Rechte",
+    blocks: [
+      {
+        p: "Du hast im Rahmen der gesetzlichen Bestimmungen jederzeit folgende Rechte bezüglich deiner personenbezogenen Daten:",
+      },
+      {
+        list: [
+          "<strong>Auskunft</strong> über die gespeicherten Daten (Art. 15 DSGVO)",
+          "<strong>Berichtigung</strong> unrichtiger Daten (Art. 16 DSGVO)",
+          "<strong>Löschung</strong> (Art. 17 DSGVO)",
+          "<strong>Einschränkung der Verarbeitung</strong> (Art. 18 DSGVO)",
+          "<strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)",
+          "<strong>Widerruf</strong> einer erteilten Einwilligung mit Wirkung für die Zukunft (Art. 7 Abs. 3 DSGVO)",
+        ],
+      },
+      { h3: "Widerspruchsrecht (Art. 21 DSGVO)" },
+      {
+        p: "Wenn eine Verarbeitung auf Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse) beruht, kannst du aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit widersprechen. Ich verarbeite die Daten dann nicht mehr, es sei denn, ich kann zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die deine Interessen, Rechte und Freiheiten überwiegen, oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.",
+      },
+      {
+        p: "Für alle Anliegen genügt eine formlose Nachricht an die oben genannten Kontaktdaten.",
+      },
+    ],
+  },
+
+  // ── Beschwerderecht ──────────────────────────────────────────────────────
+  {
+    id: "beschwerderecht",
+    title: "Beschwerderecht bei einer Aufsichtsbehörde",
+    blocks: [
+      {
+        p: "Wenn du der Ansicht bist, dass die Verarbeitung deiner Daten gegen Datenschutzrecht verstößt, hast du das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren (Art. 77 DSGVO), insbesondere in dem Mitgliedstaat deines Aufenthaltsorts, deines Arbeitsplatzes oder des mutmaßlichen Verstoßes.",
+      },
+      {
+        todo: "TODO(Lea): Zuständige Landesdatenschutzbehörde für das Bundesland des Praxissitzes mit Anschrift und Website ergänzen.",
+      },
+    ],
+  },
+
+  // ── Stand ────────────────────────────────────────────────────────────────
+  {
+    id: "stand",
+    title: "Aktualität dieser Datenschutzerklärung",
+    blocks: [
+      {
+        p: "Ich passe diese Datenschutzerklärung an, wenn sich die Website oder die rechtlichen Vorgaben ändern.",
+      },
+      {
+        todo: "TODO(Lea): Stand (Monat und Jahr) bei Veröffentlichung eintragen.",
+      },
+    ],
+  },
+];
+
+/** Hinweis-Kasten nur anzeigen, solange irgendwo noch ein Platzhalter steht. */
+const hasOpenTodos = JSON.stringify(sections).includes("TODO(");
+---
+
+<BaseLayout
+  title="Datenschutz"
+  description="Datenschutzerklärung von Peterlings Nutrition: welche Daten beim Besuch der Website und bei Kontakt oder Terminbuchung verarbeitet werden – ohne Cookies und ohne Tracking."
+>
+  <PageIntro
+    eyebrow="Rechtliches"
+    title="Datenschutz­erklärung"
+    lead="Was mit deinen Daten passiert, wenn du diese Website besuchst oder mich kontaktierst."
+    align="left"
+  />
+
+  <article class="mx-auto max-w-3xl px-5 pb-20 sm:px-6 md:pb-32">
+    {hasOpenTodos && (
+      <aside
+        class="mb-12 flex gap-4 rounded-tile bg-canvas p-6 md:p-8"
+        aria-label="Hinweis: Entwurf"
+      >
+        <Icon
+          name="info-outline-rounded"
+          class="mt-0.5 size-7 shrink-0 text-sage-700"
+        />
+        <div class="space-y-2 leading-relaxed">
+          <p class="font-semibold">Entwurf – noch nicht rechtlich geprüft</p>
+          <p class="text-muted">
+            Dieser Text ist eine Vorlage und keine Rechtsberatung. Vor der
+            Veröffentlichung muss er rechtlich geprüft bzw. mit einem
+            Datenschutz-Generator (z. B. eRecht24) abgeglichen werden. Die
+            markierten TODO-Stellen sind noch offen.
+          </p>
+        </div>
+      </aside>
+    )}
+
+    <nav aria-labelledby="inhaltsverzeichnis">
+      <h2 id="inhaltsverzeichnis" class="text-eyebrow text-sage-700">
+        Inhalt
+      </h2>
+      <ol class="mt-3 border-t border-line">
+        {sections.map((section, index) => (
+          <li class="border-b border-line">
+            <a
+              href={`#${section.id}`}
+              class="group flex items-baseline gap-4 py-3 hover:text-sage-700"
+            >
+              <span class="w-6 shrink-0 text-muted tabular-nums">
+                {index + 1}.
+              </span>
+              <span class="underline-offset-4 group-hover:underline">
+                {section.title}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    {sections.map((section, index) => (
+      <section aria-labelledby={section.id} class="mt-14 scroll-mt-24 md:mt-16">
+        <h2 id={section.id} class="text-title scroll-mt-24">
+          {index + 1}. {section.title}
+        </h2>
+        {section.blocks.map((block) =>
+          "p" in block ? (
+            <p class="mt-4 leading-relaxed text-muted" set:html={block.p} />
+          ) : "list" in block ? (
+            <ul class="mt-4 list-disc space-y-1.5 pl-5 leading-relaxed text-muted marker:text-muted">
+              {block.list.map((item) => (
+                <li set:html={item} />
+              ))}
+            </ul>
+          ) : "h3" in block ? (
+            <h3 class="mt-8 text-xl font-semibold tracking-tight text-ink">
+              {block.h3}
+            </h3>
+          ) : (
+            <p class="mt-4 leading-relaxed">
+              <span class={todoClass}>{block.todo}</span>
+            </p>
+          ),
+        )}
+      </section>
+    ))}
+  </article>
+</BaseLayout>
