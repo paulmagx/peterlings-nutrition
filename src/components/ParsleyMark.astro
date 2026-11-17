@@ -1,0 +1,67 @@
+---
+/**
+ * Bildmarke: ein Blatt glatter Petersilie (passend zum Namen „Peterlings“).
+ * Farbe über currentColor, Größe über class (z. B. "size-6 text-sage-700").
+ */
+import {
+  leafletPath,
+  leafletTransforms,
+  leafletVeins,
+  stemPath,
+} from "../lib/parsley";
+
+interface Props {
+  class?: string;
+  /** Blattadern aussparen (ab etwa 28 px sinnvoll). */
+  veins?: boolean;
+}
+
+const { class: className = "size-6", veins = true } = Astro.props;
+// Eindeutige Masken-ID, weil das Logo mehrfach auf einer Seite stehen kann.
+const maskId = `parsley-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+  viewBox="0 0 24 24"
+  fill="currentColor"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  {veins && (
+    <defs>
+      <mask
+        id={maskId}
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="24"
+        height="24"
+      >
+        <rect width="24" height="24" fill="#fff" />
+        {leafletTransforms.map((t) => (
+          <path
+            transform={t}
+            d={leafletVeins}
+            fill="none"
+            stroke="#000"
+            stroke-width="0.4"
+            stroke-linecap="round"
+          />
+        ))}
+      </mask>
+    </defs>
+  )}
+  <g mask={veins ? `url(#${maskId})` : undefined}>
+    {leafletTransforms.map((t) => (
+      <path transform={t} d={leafletPath} />
+    ))}
+  </g>
+  <path
+    d={stemPath}
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.4"
+    stroke-linecap="round"
+  />
+</svg>

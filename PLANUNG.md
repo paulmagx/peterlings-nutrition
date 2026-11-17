@@ -22,7 +22,7 @@ Die Website ist technisch fertig gebaut. Was fehlt, sind fast nur noch **Inhalte
 | #24                | Impressum, Datenschutz                                     | ⏳ Vorlage fertig – Daten von Lea + rechtliche Prüfung nötig                       |
 | #25, #26, #28      | Buchungstool, /termin, Testplan                            | ⏳ Seite fertig – Konto bei Zeeg anlegen (`docs/buchungstool.md`), dann testen     |
 | #27                | Kontaktformular                                            | ⏳ Formular fertig – Formular-Dienst wählen (`docs/kontaktformular.md`)            |
-| #32                | Hosting & Domain                                           | ⏳ `netlify.toml` fertig – Konto + Domain einrichten (`docs/hosting.md`)           |
+| #32                | Hosting & Domain                                           | ⏳ läuft auf Vercel (`vercel.json`) – Domain verbinden (`docs/hosting.md`)         |
 | #35, #36           | Newsletter, Statistik                                      | ⏳ eingebaut, aber aus – Dienst wählen (`docs/newsletter.md`, `docs/statistik.md`) |
 
 Prüfungen: `npm run check:links` und `npm run check:a11y` (lokal, mit Playwright).
