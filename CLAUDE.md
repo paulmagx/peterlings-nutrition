@@ -33,7 +33,7 @@ Vorbild ist die Startseite `src/pages/index.astro` – neue Seiten daran ausrich
 - **Icons** sparsam, in `text-sage-700`, eher groß und einzeln (`size-9`/`size-10`) als viele kleine.
 - **Logo:** Petersilienblatt (`ParsleyMark`, Formdaten in `src/lib/parsley.ts`, gleiche Werte in `public/favicon.svg`). Kein generisches Blatt-Icon mehr als Marke verwenden.
 - **Pflanzen:** `Botanical` (gezeichneter Petersilienzweig, `text-sage-300`, dekorativ, `-z-10` in einem `relative isolate overflow-hidden`-Abschnitt) sparsam an Rändern; nie hinter Fließtext. Über dem Falz `draw={false}`.
-- **3D:** `FoodScene` (Three.js, schwebendes Essen) nur auf der Startseite (Hero und Abschluss). Wird lazy geladen, pausiert außerhalb des Sichtbereichs, zeigt bei „Bewegung reduzieren“ ein Standbild. Die Mitte bleibt für Text frei (Anordnung in `src/lib/food-scene.ts`).
+- **3D:** `FoodScene` (Three.js, schwebendes Essen) nur auf der Startseite (Hero und Abschluss). Wird lazy geladen, pausiert außerhalb des Sichtbereichs, zeigt bei „Bewegung reduzieren“ ein Standbild. Die Mitte bleibt für Text frei (Anordnung und Bewegung in `src/lib/food-scene.ts`, Modelle mit selbst berechneten Texturen in `src/lib/food-models.ts`).
 - **Bewegung:** Klasse `reveal` für sanftes Einblenden beim Scrollen (reines CSS, respektiert „Bewegung reduzieren“). Nicht auf das h1 oder Inhalte über dem Falz anwenden.
 - **Formulare:** Felder `rounded-xl border border-line bg-white px-4 py-3`, Fokus `focus:border-sage-700 focus:ring-2 focus:ring-sage-700/20`; Kontrast der Rahmen mind. 3:1 zum Hintergrund (ggf. `border-muted`).
 - `legacy/` ist der alte Prototyp – nur Referenz, nicht verändern.
