@@ -32,13 +32,13 @@ const {
   serverLocation,
 } = Astro.props;
 const sizeClass =
-  className ?? (minHeight ? "" : "aspect-[4/3] md:aspect-[16/10]");
+  className ?? (minHeight ? "" : "min-h-[26rem] md:min-h-0 md:aspect-[16/10]");
 const sizeStyle = minHeight ? `min-height: ${minHeight}px` : undefined;
 ---
 
 <div
   class:list={[
-    "consent-embed relative overflow-hidden rounded-2xl border border-sage-200 bg-sage-50",
+    "consent-embed relative overflow-hidden rounded-tile bg-canvas",
     sizeClass,
   ]}
   style={sizeStyle}
@@ -46,18 +46,18 @@ const sizeStyle = minHeight ? `min-height: ${minHeight}px` : undefined;
   data-title={title}
 >
   <div
-    class="consent-embed__prompt flex h-full flex-col items-start justify-center gap-4 p-6"
+    class="consent-embed__prompt flex h-full flex-col items-center justify-center gap-4 p-8 text-center md:p-10"
     style={sizeStyle}
   >
-    <p class="font-bold">{title}</p>
-    <p class="max-w-prose text-sm text-muted">
+    <p class="text-xl font-semibold tracking-tight">{title}</p>
+    <p class="max-w-prose text-[0.9375rem] text-muted">
       Wenn du den Inhalt lädst, wird eine Verbindung zu {provider}
       {serverLocation && ` (Server in ${serverLocation})`} aufgebaut und dabei
       werden Daten (z. B. deine IP-Adresse) an den Anbieter übertragen. Mehr
       dazu in der{" "}
       <a
         href={privacyUrl}
-        class="font-semibold text-sage-700 underline"
+        class="font-medium text-sage-700 underline underline-offset-2"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -68,7 +68,7 @@ const sizeStyle = minHeight ? `min-height: ${minHeight}px` : undefined;
     </p>
     <button
       type="button"
-      class="consent-embed__button inline-flex items-center justify-center rounded-xl bg-sage-600 px-6 py-3.5 font-bold text-white shadow-lg transition hover:bg-sage-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-700 active:scale-[0.98]"
+      class="consent-embed__button inline-flex items-center justify-center rounded-full bg-sage-700 px-7 py-3.5 text-[1.0625rem] font-medium text-white transition duration-200 ease-soft hover:bg-sage-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-700 active:scale-[0.98]"
     >
       {buttonLabel}
     </button>
