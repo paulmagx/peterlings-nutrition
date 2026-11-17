@@ -37,116 +37,126 @@ const steps = [
     lead="In drei Schritten zu deinem Termin."
   />
 
-  <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6" aria-label="Ablauf">
-    <ol class="grid gap-6 md:grid-cols-3">
+  <section
+    class="mx-auto max-w-6xl px-5 pt-6 pb-20 sm:px-6 md:pb-28"
+    aria-label="Ablauf"
+  >
+    <ol class="grid gap-10 md:grid-cols-3 md:gap-8">
       {steps.map((step, i) => (
-        <li class="rounded-2xl bg-sage-50 p-6">
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 items-center justify-center rounded-full bg-sage-600 font-bold text-white">
-              {i + 1}
-            </span>
-            <Icon name={step.icon} class="size-6 text-sage-700" />
-          </div>
-          <h2 class="mt-4 text-lg font-bold">{step.title}</h2>
-          <p class="mt-1 text-sm text-muted">{step.text}</p>
+        <li class="reveal border-t border-line pt-6">
+          <p class="text-[0.9375rem] font-semibold text-sage-700 tabular-nums">
+            {String(i + 1).padStart(2, "0")}
+          </p>
+          <h2 class="text-title mt-2">{step.title}</h2>
+          <p class="mt-2 text-muted">{step.text}</p>
         </li>
       ))}
     </ol>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6" aria-label="Leistungen">
-    <h2 class="text-2xl font-extrabold">Meine Leistungen</h2>
-    <ul class="mt-4 divide-y divide-sage-200 rounded-2xl border border-sage-200 bg-white">
-      {services.map((service) => (
-        <li class="flex items-center justify-between gap-4 px-5 py-3">
-          <span class="font-semibold">{service.title}</span>
-          <span class="shrink-0 text-sm text-muted">
-            <strong class="text-base text-ink">{service.price}&nbsp;€</strong>{" "}
-            {service.priceNote}
-          </span>
+  <section class="bg-canvas" aria-labelledby="leistungen-heading">
+    <div class="mx-auto max-w-4xl px-5 py-20 sm:px-6 md:py-32">
+      <h2 id="leistungen-heading" class="text-headline reveal text-center">
+        Meine Leistungen
+      </h2>
+      <ul class="reveal mt-12 rounded-tile bg-white px-6 py-2 md:mt-16 md:px-10">
+        {services.map((service) => (
+          <li class="flex flex-col gap-1 border-b border-line py-5 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+            <span class="text-xl font-semibold tracking-tight">
+              {service.title}
+            </span>
+            <span class="shrink-0 text-muted">
+              <strong class="text-xl font-semibold text-ink">
+                {service.price}&nbsp;€
+              </strong>{" "}
+              {service.priceNote}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-8 text-center">
+        <Button href="/leistungen" variant="link" size="lg">
+          Mehr zu den Leistungen
+        </Button>
+      </p>
+    </div>
+  </section>
+
+  <section aria-labelledby="buchung-heading">
+    <div class="mx-auto max-w-4xl px-5 py-20 sm:px-6 md:py-32">
+      <h2 id="buchung-heading" class="text-headline reveal text-center">
+        Online buchen
+      </h2>
+      {isBookingConfigured ? (
+        <div class="mt-12 md:mt-16">
+          <ConsentEmbed
+            provider={booking.providerName}
+            src={booking.embedUrl}
+            title={`Terminbuchung über ${booking.providerName}`}
+            privacyUrl={booking.privacyUrl}
+            buttonLabel="Kalender laden"
+            minHeight={booking.embedHeight}
+            serverLocation={booking.serverLocation}
+          />
+          <div class="mt-8 text-center">
+            <p class="text-muted">
+              Du möchtest nichts nachladen? Dann kannst du auch direkt bei{" "}
+              {booking.providerName} buchen.
+            </p>
+            <Button
+              newTab
+              href={booking.bookingUrl}
+              variant="secondary"
+              icon="open-in-new-rounded"
+              class="mt-4"
+            >
+              Buchungsseite in neuem Tab öffnen
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div class="reveal mt-12 rounded-tile bg-canvas p-8 text-center md:mt-16 md:p-16">
+          <Icon
+            name="calendar-month-outline-rounded"
+            class="mx-auto size-10 text-sage-700"
+          />
+          <h3 class="text-title mt-5">
+            Die Online-Buchung wird gerade eingerichtet
+          </h3>
+          <p class="text-lead mx-auto mt-3 max-w-xl text-muted">
+            Bis es so weit ist, schreib mir einfach eine Nachricht. Wir finden
+            gemeinsam einen Termin.
+          </p>
+          <Button href="/kontakt" size="lg" class="mt-8">
+            Termin per Nachricht anfragen
+          </Button>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="border-t border-line" aria-labelledby="hinweise-heading">
+    <div class="mx-auto max-w-3xl px-5 py-12 sm:px-6 md:py-16">
+      <h2 id="hinweise-heading" class="text-[0.9375rem] font-semibold text-ink">
+        Gut zu wissen
+      </h2>
+      <ul class="mt-3 space-y-2 text-[0.8125rem] leading-relaxed text-muted">
+        <li>
+          Bitte gib bei der Buchung keine ausführlichen Gesundheitsdaten an –
+          darüber sprechen wir im Termin.
         </li>
-      ))}
-    </ul>
-    <p class="mt-3 text-sm">
-      <a
-        href="/leistungen"
-        class="font-semibold text-sage-700 underline underline-offset-2 hover:text-sage-800"
-      >
-        Mehr zu den Leistungen
-      </a>
-    </p>
-  </section>
-
-  <section
-    class="mx-auto max-w-6xl px-4 py-8 sm:px-6"
-    aria-labelledby="buchung-heading"
-  >
-    <h2 id="buchung-heading" class="text-2xl font-extrabold">
-      Online buchen
-    </h2>
-    {isBookingConfigured ? (
-      <div class="mt-4">
-        <ConsentEmbed
-          provider={booking.providerName}
-          src={booking.embedUrl}
-          title={`Terminbuchung über ${booking.providerName}`}
-          privacyUrl={booking.privacyUrl}
-          buttonLabel="Kalender laden"
-          minHeight={booking.embedHeight}
-          serverLocation={booking.serverLocation}
-        />
-        <p class="mt-4 text-sm text-muted">
-          Du möchtest nichts nachladen? Dann kannst du auch direkt bei{" "}
-          {booking.providerName} buchen.
-        </p>
-        <Button
-          newTab
-          href={booking.bookingUrl}
-          variant="secondary"
-          icon="open-in-new-rounded"
-          class="mt-3"
-        >
-          Buchungsseite in neuem Tab öffnen
-        </Button>
-      </div>
-    ) : (
-      <div class="mt-4 rounded-2xl border border-sage-200 bg-sage-100 p-8 text-center md:p-12">
-        <Icon
-          name="calendar-month-outline-rounded"
-          class="mx-auto size-10 text-sage-700"
-        />
-        <h3 class="mt-3 text-xl font-extrabold">
-          Die Online-Buchung wird gerade eingerichtet
-        </h3>
-        <p class="mx-auto mt-2 max-w-xl text-muted">
-          Bis es so weit ist, schreib mir einfach eine Nachricht. Wir finden
-          gemeinsam einen Termin.
-        </p>
-        <Button href="/kontakt" class="mt-6">
-          Termin per Nachricht anfragen
-        </Button>
-      </div>
-    )}
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 pt-4 pb-16 sm:px-6">
-    <h2 class="text-2xl font-extrabold">Gut zu wissen</h2>
-    <ul class="mt-4 max-w-2xl space-y-3 text-sm text-muted">
-      <li>
-        Bitte gib bei der Buchung keine ausführlichen Gesundheitsdaten an –
-        darüber sprechen wir im Termin.
-      </li>
-      {/* TODO(Lea): Absagehinweis ergänzen (z. B. bis wann ein Termin kostenfrei abgesagt oder verschoben werden kann). */}
-      <li>
-        Wie deine Daten bei der Buchung verarbeitet werden, steht in der{" "}
-        <a
-          href="/datenschutz#terminbuchung"
-          class="font-semibold text-sage-700 underline underline-offset-2 hover:text-sage-800"
-        >
-          Datenschutzerklärung
-        </a>
-        .
-      </li>
-    </ul>
+        {/* TODO(Lea): Absagehinweis ergänzen (z. B. bis wann ein Termin kostenfrei abgesagt oder verschoben werden kann). */}
+        <li>
+          Wie deine Daten bei der Buchung verarbeitet werden, steht in der{" "}
+          <a
+            href="/datenschutz#terminbuchung"
+            class="font-medium text-sage-700 underline underline-offset-2"
+          >
+            Datenschutzerklärung
+          </a>
+          .
+        </li>
+      </ul>
+    </div>
   </section>
 </BaseLayout>
